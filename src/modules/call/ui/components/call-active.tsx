@@ -3,7 +3,7 @@ import Image from "next/image";
 import { CallControls, SpeakerLayout } from "@stream-io/video-react-sdk";
 
 interface CallActiveProps {
-//   onLeave: () => void;
+  //   onLeave: () => void;
   meetingName: string;
 }
 
@@ -21,11 +21,8 @@ export const CallActive = ({ meetingName }: CallActiveProps) => {
       </div>
       <SpeakerLayout />
       <div className="bg-[#101213] rounded-full px-4">
-        <CallControls  />
+        <CallControls />
       </div>
     </div>
   );
 };
-
-
-

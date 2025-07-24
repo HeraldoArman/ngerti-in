@@ -6,7 +6,6 @@ import { user, agents, meetings } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { createAgent, openai, TextMessage } from "@inngest/agent-kit";
 
-
 const summarizer = createAgent({
   name: "summarizer",
   system: `
@@ -49,7 +48,7 @@ export const meetingsProcessing = inngest.createFunction(
 
     const transcriptWithSpeakers = await step.run("add-speakers", async () => {
       const speakerIds = Array.from(
-        new Set(transcript.map((item) => item.speaker_id))
+        new Set(transcript.map((item) => item.speaker_id)),
       );
       const userSpeakers = await db
         .select()
@@ -66,7 +65,7 @@ export const meetingsProcessing = inngest.createFunction(
 
       return transcript.map((item) => {
         const speaker = speakers.find(
-          (speaker) => speaker.id === item.speaker_id
+          (speaker) => speaker.id === item.speaker_id,
         );
 
         if (!speaker) {
@@ -82,7 +81,7 @@ export const meetingsProcessing = inngest.createFunction(
 
     const { output } = await summarizer.run(
       "Summarize the following transcript: " +
-        JSON.stringify(transcriptWithSpeakers)
+        JSON.stringify(transcriptWithSpeakers),
     );
 
     await step.run("save-summary", async () => {
@@ -94,5 +93,5 @@ export const meetingsProcessing = inngest.createFunction(
         })
         .where(eq(meetings.id, event.data.meeting_id));
     });
-  }
+  },
 );

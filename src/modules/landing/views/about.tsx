@@ -29,7 +29,7 @@ export default function About() {
             </p>
           </div>
           <img
-            className="col-span-1"
+            className="rounded-2xl col-span-1"
             alt="our image"
             src={"/placeholder.avif"}
           />

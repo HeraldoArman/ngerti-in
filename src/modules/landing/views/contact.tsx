@@ -65,7 +65,7 @@ export default function Contact() {
     <section id="contact" className="w-full py-24 bg-muted/30">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Get in Touch</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Get In Touch</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Have questions about our platform? We'd love to hear from you. Send
             us a message and we'll respond as soon as possible.
