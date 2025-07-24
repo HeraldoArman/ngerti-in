@@ -12,7 +12,7 @@ import { db } from "@/db";
 import { agents, meetings } from "@/db/schema";
 import { streamVideo } from "@/lib/stream-video";
 // import { StreamClient } from "@stream-io/node-sdk";
-import { Signature } from "lucide-react";
+// import { Signature } from "lucide-react";
 // import { headers } from "next/headers";
 import { inngest } from "@/inngest/client";
 
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     // console.log("existingAgent", existingAgent);
     // console.log("agent name", existingAgent.name);
 
-    console.log("realtimeClient", realtimeClient);
+    // console.log("realtimeClient", realtimeClient);
   } else if (eventType === "call.session_participant_left") {
     const event = payload as CallSessionParticipantLeftEvent;
     const meetingId = event.call_cid.split(":")[1];
@@ -161,8 +161,8 @@ export async function POST(req: NextRequest) {
     await inngest.send({
       name: "meetings/processing",
       data: {
-        meetingId: updatedMeeting.id,
-        transcriptUrl: updatedMeeting.transcriptUrl,
+        meeting_id: updatedMeeting.id,
+        transcript_url: updatedMeeting.transcriptUrl, 
       },
     });
   } else if (eventType === "call.recording_ready") {
