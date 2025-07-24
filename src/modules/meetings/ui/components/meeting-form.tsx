@@ -132,7 +132,7 @@ export const MeetingForm = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Agent</FormLabel>
+                <FormLabel>Tutor</FormLabel>
                 <FormControl>
                   <CommandSelect
                     options={(agent.data?.items ?? []).map((agent) => ({
@@ -162,7 +162,7 @@ export const MeetingForm = ({
 										onClick={() => setOpenNewAgentDialog(true)}
 										className="text-primary hover:underline"
 									>
-										Create new agent
+										Create new Tutor
 									</button>
 								</FormDescription>
                 <FormMessage />
