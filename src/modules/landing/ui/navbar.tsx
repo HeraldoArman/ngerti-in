@@ -17,9 +17,11 @@ export default function Navbar() {
           <Link href="#about">About</Link>
           <Link href="#contact">Contact</Link>
         </div>
-        <Button variant="secondary" className="cursor-pointer">
-          Sign In
-        </Button>
+        <Link href={"/sign-in"}>
+          <Button variant="secondary" className="cursor-pointer">
+            Sign In
+          </Button>
+        </Link>
       </div>
     </div>
   );

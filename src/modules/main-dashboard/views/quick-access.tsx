@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import QuickAccessCard from "../ui/quick-access-card";
-import { FileText, Pencil } from "lucide-react";
+import { FileText, Pencil, Video } from "lucide-react";
 
 export default function QuickAccess() {
   return (
@@ -18,11 +18,18 @@ export default function QuickAccess() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid-cols-1 md:grid-cols-2 gap-6 grid">
-          <QuickAccessCard icon={<Pencil />} text="Create a new meeting" />
+        <div className="grid-cols-1 lg:grid-cols-3 gap-6 grid">
           <QuickAccessCard
-            icon={<FileText />}
-            text="See your latest meeting summary"
+            icon={<Pencil width={32} />}
+            text="Create a new meeting"
+          />
+          <QuickAccessCard
+            icon={<FileText width={32} />}
+            text="See latest meeting summary"
+          />
+          <QuickAccessCard
+            icon={<Video width={32} />}
+            text="See latest meeting recording"
           />
         </div>
       </CardContent>
