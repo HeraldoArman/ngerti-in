@@ -90,9 +90,9 @@ export const AgentForm = ({
       prompt: initialValues?.prompt || "",
     },
   });
-//   const [showCustomSubject, setShowCustomSubject] = useState(
-//     form.getValues("subject") === "Other"
-//   );
+  //   const [showCustomSubject, setShowCustomSubject] = useState(
+  //     form.getValues("subject") === "Other"
+  //   );
 
   const isEdit = !!initialValues?.id;
   const isPending = createAgent.isPending || updateAgent.isPending;
@@ -101,7 +101,7 @@ export const AgentForm = ({
       updateAgent.mutate({
         ...values,
         id: initialValues.id,
-        prompt: values.prompt
+        prompt: values.prompt,
       });
     } else {
       createAgent.mutate(values);
@@ -137,10 +137,9 @@ export const AgentForm = ({
                 <FormLabel>Subject</FormLabel>
                 <Select
                   defaultValue={field.value}
-                //   onValueChange={(value) => {
-                //     field.onChange(value);
-                //     setShowCustomSubject(value === "Other");
-                //   }}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                    }}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -182,7 +181,7 @@ export const AgentForm = ({
               )}
             />
           )} */}
-{/* 
+          {/* 
           <FormField
             name="description"
             control={form.control}
@@ -200,7 +199,7 @@ export const AgentForm = ({
             )}
           /> */}
 
-{isEdit && (
+          {isEdit && (
             <FormField
               name="prompt"
               control={form.control}
