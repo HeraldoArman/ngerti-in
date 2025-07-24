@@ -104,9 +104,11 @@ const SignUpView = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">Let&apos;s get started</h1>
+                  <h1 className="text-2xl font-bold">
+                    Let&apos;s Get Started!
+                  </h1>
                   <p className="text-muted-foreground text-balance">
-                    Create your account
+                    Create an account
                   </p>
                 </div>
                 <div className="grid gap-3">
@@ -118,6 +120,7 @@ const SignUpView = () => {
                         <FormLabel>Name</FormLabel>
                         <FormControl>
                           <Input
+                            className="placeholder:opacity-40 border-border border-1"
                             type="text"
                             placeholder="John Doe"
                             {...field}
@@ -137,6 +140,7 @@ const SignUpView = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
+                            className="placeholder:opacity-40 border-border border-1"
                             type="email"
                             placeholder="m@example.com"
                             {...field}
@@ -153,9 +157,10 @@ const SignUpView = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>password</FormLabel>
+                        <FormLabel>Password</FormLabel>
                         <FormControl>
                           <Input
+                            className="placeholder:opacity-40 border-border border-1"
                             type="password"
                             placeholder="********"
                             {...field}
@@ -175,6 +180,7 @@ const SignUpView = () => {
                         <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
                           <Input
+                            className="placeholder:opacity-40 border-border border-1"
                             type="password"
                             placeholder="********"
                             {...field}
@@ -192,8 +198,12 @@ const SignUpView = () => {
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
-                <Button type="submit" className="w-full" disabled={pending}>
-                  Sign in
+                <Button
+                  type="submit"
+                  className="cursor-pointer w-full"
+                  disabled={pending}
+                >
+                  Sign up
                 </Button>
 
                 <div className="relative my-1 text-center text-sm">
@@ -207,8 +217,8 @@ const SignUpView = () => {
                   <Button
                     type="button"
                     disabled={pending}
-                    variant="outline"
-                    className="w-full"
+                    variant="secondary"
+                    className="w-full cursor-pointer"
                     onClick={() => {
                       onSocial("google");
                     }}
@@ -218,8 +228,8 @@ const SignUpView = () => {
                   <Button
                     type="button"
                     disabled={pending}
-                    variant="outline"
-                    className="w-full"
+                    variant="secondary"
+                    className="w-full cursor-pointer"
                     onClick={() => {
                       onSocial("github");
                     }}
@@ -242,15 +252,9 @@ const SignUpView = () => {
 
           <div className="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
             <img src="/logo.svg" alt="image" className="h-[92px] w-[92px]" />
-            <p className="text-2xl font-semibold text-white">Meet.ai</p>
           </div>
         </CardContent>
       </Card>
-
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>
-      </div>
     </div>
   );
 };
