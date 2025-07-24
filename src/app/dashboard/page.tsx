@@ -11,7 +11,12 @@ const page = async () => {
     redirect("/sign-in");
   }
 
+
   return <div>page</div>;
+
+
+
+
 };
 
 export default page;
