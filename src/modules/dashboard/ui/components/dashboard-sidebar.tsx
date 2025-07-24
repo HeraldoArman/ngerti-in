@@ -2,7 +2,6 @@
 import {
   Sidebar,
   SidebarContent,
-
   SidebarGroup,
   SidebarHeader,
   SidebarGroupContent,
@@ -24,9 +23,7 @@ const Section = [
     label: "Meetings",
     href: "/meetings",
   },
-
 ];
-
 
 export const DashboardSidebar = () => {
   const pathname = usePathname();
@@ -34,13 +31,15 @@ export const DashboardSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="text-sidebar-accent-foreground">
-        <Link href={"/"} className="flex items-center gap-2 px-2 pt-2">
-          <Image src="/logo.svg" height={36} width={36} alt="Ngerti-In" />
-          <p className="text-2xl font-semibold">Ngerti-In</p>
+        <Link href={"/dashboard"} className="flex items-center gap-2 px-2 pt-2">
+          <div className="flex gap-4 items-center justify-center">
+            <Image src="./logo.svg" height={24} width={24} alt="Ngerti-In" />
+            <p className="text-2xl font-semibold">Ngerti-in</p>
+          </div>
         </Link>
       </SidebarHeader>
       <div className="px-4 py-2">
-        <Separator className="opacity-10 text-[#5D6B68]" />
+        <Separator className="opacity-40 bg-[#5D6B68]" />
       </div>
       <SidebarContent>
         <SidebarGroup>
@@ -51,9 +50,9 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68] from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
+                      "transition-all duration-200 h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-black/40 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
                       pathname === item.href &&
-                        "bg-linear-to-r/oklch border-[#5D6B68]/10"
+                        "bg-linear-to-r/oklch border-[#5D6B68]/10",
                     )}
                     isActive={pathname === item.href}
                   >
@@ -69,9 +68,8 @@ export const DashboardSidebar = () => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        
       </SidebarContent>
-      <SidebarFooter className="text-white">
+      <SidebarFooter>
         <DashboardUserButton></DashboardUserButton>
       </SidebarFooter>
     </Sidebar>
