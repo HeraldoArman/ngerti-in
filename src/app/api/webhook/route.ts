@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   if (!signature || !apiKey) {
     return NextResponse.json(
       { error: "Missing signature or API key" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json(
       { error: "Invalid JSON payload" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     if (!meetingId) {
       return NextResponse.json(
         { error: "Missing meetingId in call session started event" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -70,14 +70,14 @@ export async function POST(req: NextRequest) {
           not(eq(meetings.status, "completed")),
           not(eq(meetings.status, "cancelled")),
           not(eq(meetings.status, "active")),
-          not(eq(meetings.status, "processing"))
-        )
+          not(eq(meetings.status, "processing")),
+        ),
       );
 
     if (!existingMeeting) {
       return NextResponse.json(
         { error: "Meeting not found or already started" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
     if (!existingAgent) {
       return NextResponse.json(
         { error: "Agent not found for the meeting" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
     if (!meetingId) {
       return NextResponse.json(
         { error: "Missing meetingId in call session participant left event" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const call = streamVideo.video.call("default", meetingId);
@@ -134,7 +134,7 @@ export async function POST(req: NextRequest) {
     if (!meetingId) {
       return NextResponse.json(
         { error: "Missing meetingId in call session ended event" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     await db
@@ -154,7 +154,7 @@ export async function POST(req: NextRequest) {
     if (!updatedMeeting) {
       return NextResponse.json(
         { error: "Meeting not found for transcription ready event" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 

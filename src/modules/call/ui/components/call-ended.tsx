@@ -30,7 +30,7 @@ export const CallEnded = () => {
               Summary will be available in a few minutes.
             </p>
           </div>
-          
+
           <Button asChild>
             <Link href={"/dashboard/meetings"}>Back to meetings</Link>
           </Button>

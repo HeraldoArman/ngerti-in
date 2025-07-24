@@ -36,7 +36,7 @@ export default function FeatureCard({ feature }: Props) {
           </div>
 
           <div className="flex-1 text-center lg:text-left">
-            <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            <h3 className="text-3xl font-bold text-foreground mb-6">
               {feature.text}
             </h3>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">

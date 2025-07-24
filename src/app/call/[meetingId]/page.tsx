@@ -26,7 +26,7 @@ const page = async ({ params }: PageProps) => {
 
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
-    trpc.meetings.getOne.queryOptions({ id: meetingId })
+    trpc.meetings.getOne.queryOptions({ id: meetingId }),
   );
 
   return (
