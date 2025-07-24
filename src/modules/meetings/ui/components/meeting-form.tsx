@@ -135,7 +135,7 @@ export const MeetingForm = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Agent</FormLabel>
+                <FormLabel>Tutor</FormLabel>
                 <FormControl>
                   <CommandSelect
                     options={(agent.data?.items ?? []).map((agent) => ({
@@ -158,16 +158,18 @@ export const MeetingForm = ({
                     placeholder="Select an agent"
                   />
                 </FormControl>
-                <FormDescription>
-                  Not Found what you are looking for?{" "}
-                  <button
-                    type="button"
-                    onClick={() => setOpenNewAgentDialog(true)}
-                    className="text-primary hover:underline"
-                  >
-                    Create new agent
-                  </button>
-                </FormDescription>
+
+								<FormDescription>
+									Not Found what you are looking for?{" "}
+									<button
+										type="button"	
+										onClick={() => setOpenNewAgentDialog(true)}
+										className="text-primary hover:underline"
+									>
+										Create new Tutor
+									</button>
+								</FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
