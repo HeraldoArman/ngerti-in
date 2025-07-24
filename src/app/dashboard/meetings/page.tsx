@@ -1,4 +1,5 @@
 import React from "react";
+
 // import {
   // AgentsView,
   // AgentsViewLoading,
@@ -49,5 +50,6 @@ const page = async ({ searchParams }: Props) => {
   </>
   );
 };
+
 
 export default page;
