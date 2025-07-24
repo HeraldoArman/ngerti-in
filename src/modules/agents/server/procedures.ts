@@ -54,7 +54,7 @@ export const agentsRouter = createTRPCRouter({
       const [removedAgent] = await db
         .delete(agents)
         .where(
-          and(eq(agents.id, input.id), eq(agents.userId, ctx.userId.user.id))
+          and(eq(agents.id, input.id), eq(agents.userId, ctx.userId.user.id)),
         )
         .returning();
 
@@ -78,7 +78,7 @@ export const agentsRouter = createTRPCRouter({
         })
         .from(agents)
         .where(
-          and(eq(agents.id, input.id), eq(agents.userId, ctx.userId.user.id))
+          and(eq(agents.id, input.id), eq(agents.userId, ctx.userId.user.id)),
         );
 
       if (!existingAgent) {
@@ -99,7 +99,7 @@ export const agentsRouter = createTRPCRouter({
           .max(MAX_PAGE_SIZE)
           .default(DEFAULT_PAGE_SIZE),
         search: z.string().nullish(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       console.log("[GET AGENTS]", input, ctx.userId);
@@ -111,8 +111,8 @@ export const agentsRouter = createTRPCRouter({
         .where(
           and(
             eq(agents.userId, ctx.userId.user.id),
-            search ? ilike(agents.name, `%${search}%`) : undefined
-          )
+            search ? ilike(agents.name, `%${search}%`) : undefined,
+          ),
         )
         .orderBy(desc(agents.createdAt), desc(agents.id))
         .limit(pageSize)
@@ -124,8 +124,8 @@ export const agentsRouter = createTRPCRouter({
         .where(
           and(
             eq(agents.userId, ctx.userId.user.id),
-            search ? ilike(agents.name, `%${search}%`) : undefined
-          )
+            search ? ilike(agents.name, `%${search}%`) : undefined,
+          ),
         );
       const totalPages = Math.ceil(total.count / pageSize);
 
@@ -145,17 +145,16 @@ export const agentsRouter = createTRPCRouter({
         });
       }
 
-
       const [createdAgent] = await db
-      .insert(agents)
-      .values({
-        name,
-        subject,
-        prompt: resolvedPrompt,
-        userId: ctx.userId.user.id, // should be user_id in your schema
-        // description, // only if this column exists
-      })
-      .returning();
+        .insert(agents)
+        .values({
+          name,
+          subject,
+          prompt: resolvedPrompt,
+          userId: ctx.userId.user.id, // should be user_id in your schema
+          // description, // only if this column exists
+        })
+        .returning();
 
       return createdAgent;
     }),

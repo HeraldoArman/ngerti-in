@@ -49,7 +49,7 @@ export const AgentForm = ({
     trpc.agents.create.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.agents.getMany.queryOptions({})
+          trpc.agents.getMany.queryOptions({}),
         );
 
         onSuccess?.();
@@ -58,19 +58,19 @@ export const AgentForm = ({
         toast.error(error.message);
         // TODO: check if error is a TRPC error and handle accordingly
       },
-    })
+    }),
   );
 
   const updateAgent = useMutation(
     trpc.agents.update.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.agents.getMany.queryOptions({})
+          trpc.agents.getMany.queryOptions({}),
         );
 
         if (initialValues?.id) {
           await queryClient.invalidateQueries(
-            trpc.agents.getOne.queryOptions({ id: initialValues.id })
+            trpc.agents.getOne.queryOptions({ id: initialValues.id }),
           );
         }
         onSuccess?.();
@@ -79,7 +79,7 @@ export const AgentForm = ({
         toast.error(error.message);
         // TODO: check if error is a TRPC error and handle accordingly
       },
-    })
+    }),
   );
 
   const form = useForm<z.infer<typeof agentsInsertSchema>>({
@@ -137,9 +137,9 @@ export const AgentForm = ({
                 <FormLabel>Subject</FormLabel>
                 <Select
                   defaultValue={field.value}
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
                 >
                   <FormControl>
                     <SelectTrigger>

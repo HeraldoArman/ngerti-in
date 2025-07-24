@@ -31,14 +31,14 @@ export const AgentIdView = ({ agentId }: Props) => {
   const [updateAgentDialogOpen, setUpdateAgentDialogOpen] = useState(false);
 
   const { data } = useSuspenseQuery(
-    trpc.agents.getOne.queryOptions({ id: agentId })
+    trpc.agents.getOne.queryOptions({ id: agentId }),
   );
 
   const removeAgent = useMutation(
     trpc.agents.remove.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.agents.getMany.queryOptions({})
+          trpc.agents.getMany.queryOptions({}),
         );
         router.push("/dashboard/tutor");
       },
@@ -47,12 +47,12 @@ export const AgentIdView = ({ agentId }: Props) => {
         toast.error(error.message || "Failed to remove agent");
         console.error("Error removing agent:", error);
       },
-    })
+    }),
   );
 
   const [RemoveConfirmation, confirmRemove] = useConfirm(
     "Are you sure?",
-    `The following action will remove the agent ${data.name} permanently. This action cannot be undone.`
+    `The following action will remove the agent ${data.name} permanently. This action cannot be undone.`,
   );
 
   const handleRemoveAgent = async () => {
@@ -93,7 +93,6 @@ export const AgentIdView = ({ agentId }: Props) => {
               className="flex items-center gap-x-2 [&>svg]:size-4"
             >
               <VideoIcon className="text-blue-700" />
-
             </Badge>
             <div className="flex flex-col gap-y-4">
               <p className="text-lg font-medium">Prompt</p>
