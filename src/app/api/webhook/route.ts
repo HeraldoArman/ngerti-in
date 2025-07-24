@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
         { status: 404 },
       );
     }
-
+    console.log(updatedMeeting.transcriptUrl)
     await inngest.send({
       name: "meetings/processing",
       data: {

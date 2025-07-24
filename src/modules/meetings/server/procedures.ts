@@ -8,7 +8,16 @@ import { meetings, agents } from "@/db/schema";
 // import
 //   import { agentsInsertSchema } from "../schemas";
 import { z } from "zod";
-import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
+import {
+  and,
+  count,
+  desc,
+  eq,
+  getTableColumns,
+  ilike,
+  inArray,
+  sql,
+} from "drizzle-orm";
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
@@ -17,12 +26,25 @@ import {
 } from "@/constant";
 import { TRPCError } from "@trpc/server";
 import { meetingsInsertSchema, meetingsUpdateSchema } from "../schema";
-import { MeetingStatus } from "../types";
+import { MeetingStatus, StreamTranscriptItem } from "../types";
 import { streamVideo } from "@/lib/stream-video";
 import { generatedAvatarUri } from "@/lib/avatar";
 import { languages } from "humanize-duration";
+import JSONL from "jsonl-parse-stringify";
+import { user } from "@/db/schema";
+import { streamChat } from "@/lib/stream-chat";
 
 export const meetingsRouter = createTRPCRouter({
+  generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
+    const token = streamChat.createToken(ctx.userId.user.id);
+    await streamChat.upsertUser(
+      {
+        id: ctx.userId.user.id,
+        role: "admin",
+      },
+    );
+    return token
+  }),
   generateToken: protectedProcedure.mutation(async ({ ctx }) => {
     await streamVideo.upsertUsers([
       {
@@ -52,7 +74,7 @@ export const meetingsRouter = createTRPCRouter({
       const [removedMeeing] = await db
         .delete(meetings)
         .where(
-          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id)),
+          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id))
         )
         .returning();
 
@@ -74,7 +96,7 @@ export const meetingsRouter = createTRPCRouter({
         .update(meetings)
         .set(updateData)
         .where(
-          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id)),
+          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id))
         )
         .returning();
 
@@ -156,7 +178,7 @@ export const meetingsRouter = createTRPCRouter({
           ...getTableColumns(meetings),
           agent: agents,
           duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
-            "duration",
+            "duration"
           ),
         })
         .from(meetings)
@@ -164,8 +186,8 @@ export const meetingsRouter = createTRPCRouter({
         .where(
           and(
             eq(meetings.id, input.id),
-            eq(meetings.userId, ctx.userId.user.id),
-          ),
+            eq(meetings.userId, ctx.userId.user.id)
+          )
         );
 
       if (!existingMeeting) {
@@ -195,7 +217,7 @@ export const meetingsRouter = createTRPCRouter({
             MeetingStatus.Cancelled,
           ])
           .nullish(),
-      }),
+      })
     )
     .query(async ({ ctx, input }) => {
       const { search, page, pageSize, status, agentId } = input;
@@ -205,7 +227,7 @@ export const meetingsRouter = createTRPCRouter({
           ...getTableColumns(meetings),
           agent: agents,
           duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
-            "duration",
+            "duration"
           ),
         })
         .from(meetings)
@@ -215,8 +237,8 @@ export const meetingsRouter = createTRPCRouter({
             eq(meetings.userId, ctx.userId.user.id),
             search ? ilike(meetings.name, `%${search}%`) : undefined,
             status ? eq(meetings.status, status) : undefined,
-            agentId ? eq(meetings.agentId, agentId) : undefined,
-          ),
+            agentId ? eq(meetings.agentId, agentId) : undefined
+          )
         )
         .orderBy(desc(meetings.createdAt), desc(meetings.id))
         .limit(pageSize)
@@ -228,12 +250,91 @@ export const meetingsRouter = createTRPCRouter({
         .where(
           and(
             eq(meetings.userId, ctx.userId.user.id),
-            search ? ilike(meetings.name, `%${search}%`) : undefined,
-          ),
+            search ? ilike(meetings.name, `%${search}%`) : undefined
+          )
         );
 
       const totalPages = Math.ceil(total.count / pageSize);
 
       return { items: data, total: total.count, totalPages };
+    }),
+
+  // Add this inside meetingsRouter
+
+  getTranscript: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const [meeting] = await db
+        .select()
+        .from(meetings)
+        .where(
+          and(
+            eq(meetings.id, input.id),
+            eq(meetings.userId, ctx.userId.user.id)
+          )
+        );
+
+      if (!meeting || !meeting.transcriptUrl) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Meeting not found",
+        });
+      }
+
+      // If you store the transcript as a URL and want to fetch its content:
+
+      const transcript = await fetch(meeting.transcriptUrl)
+        .then((res) => res.text())
+        .then(
+          (text: string) =>
+            JSONL.parse<StreamTranscriptItem>(text) as StreamTranscriptItem[]
+        )
+        .catch(() => []);
+
+      // Pastikan transcript adalah array
+      if (!Array.isArray(transcript)) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Transcript is not an array",
+        });
+      }
+
+      const speakerIds = [
+        ...new Set(transcript.map((item) => item.speaker_id)),
+      ];
+
+      const userSpeakers = await db
+        .select()
+        .from(user)
+        .where(inArray(user.id, speakerIds))
+        .then((users) =>
+          users.map((user) => ({
+            ...user,
+            image:
+              user.image ??
+              generatedAvatarUri({ seed: user.name, variant: "initials" }),
+          }))
+        );
+
+      const transcriptWithSpeakers = transcript.map((item) => {
+        const speaker = userSpeakers.find(
+          (user) => user.id === item.speaker_id
+        );
+        return {
+          ...item,
+          speaker: speaker
+            ? {
+                id: speaker.id,
+                name: speaker.name,
+                image: speaker.image,
+              }
+            : null,
+        };
+      });
+      return transcriptWithSpeakers;
+      // throw new TRPCError({
+      //   code: "NOT_FOUND",
+      //   message: "Transcript not found",
+      // });
     }),
 });
