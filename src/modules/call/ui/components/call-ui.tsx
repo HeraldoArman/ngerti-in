@@ -31,8 +31,8 @@ export const CallUI = ({ meetingName }: { meetingName: string }) => {
     if (callingState === CallingState.LEFT) {
       setShow("ended");
     }
-    console.log("current state: " + callingState);
-    console.log("show: " + show);
+    // console.log("current state: " + callingState);
+    // console.log("show: " + show);
   }, [callingState]);
 
   return (

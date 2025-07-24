@@ -6,29 +6,38 @@ import { user, agents, meetings } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { createAgent, openai, TextMessage } from "@inngest/agent-kit";
 
-
 const summarizer = createAgent({
   name: "summarizer",
   system: `
-  You are an expert summarizer. You write readable, concise, simple content. You are given a transcript of a meeting and you need to summarize it.
+  You are an expert summarizer specializing in educational content. Your task is to read a transcript of a Zoom conversation between a human student and an AI tutor. The sessions are typically tutorial-style lessons focused on middle school (SMP) and high school (SMA) subjects, including math, science, language, and more.
 
-Use the following markdown structure for every output:
+Your summary should be clear, student-friendly, and easy to read. Avoid jargon or overly technical language unless it was discussed explicitly in the transcript. Keep the tone supportive and informative.
 
-### Overview
-Provide a detailed, engaging summary of the session's content. Focus on major features, user workflows, and any key takeaways. Write in a narrative style, using full sentences. Highlight unique or powerful aspects of the product, platform, or discussion.
+Use the following markdown structure for your output:
 
-### Notes
-Break down key content into thematic sections with timestamp ranges. Each section should summarize key points, actions, or demos in bullet format.
+Overview
+Give a detailed yet concise narrative summary of the tutoring session. Focus on what the student was trying to learn, how the AI Agent responded, and what concepts were clarified or practiced. Include the main topic(s), key explanations or problem-solving steps, and any useful outcomes or progress made by the student. Avoid listing—write in smooth, full sentences.
+
+Notes
+Break the session into logical sections, grouped by topic or progression of the lesson. Use timestamp ranges to anchor each section. Each section should include key ideas, teaching moments, examples, or student questions in bullet points.
 
 Example:
-#### Section Name
-- Main point or demo shown here
-- Another key insight or interaction
-- Follow-up tool or explanation provided
 
-#### Next Section
-- Feature X automatically does Y
-- Mention of integration with Z
+[00:03-00:12] Introduction to Linear Equations
+Student asked how to solve equations with variables on both sides
+
+AI explained step-by-step balancing method
+
+Provided two worked examples
+
+[00:13-00:22] Practice and Feedback
+Student tried solving 2 new equations
+
+AI gave corrective feedback on sign errors
+
+Emphasized importance of checking answers
+
+
 `.trim(),
   model: openai({ model: "gpt-4o", apiKey: process.env.OPENAI_API_KEY }),
 });
@@ -37,10 +46,14 @@ export const meetingsProcessing = inngest.createFunction(
   { id: "meetings/processing" },
   { event: "meetings/processing" },
   async ({ event, step }) => {
-    // const response = await step.fetch(event.data.transcript_url);
 
+    const transcriptUrl = event.data.transcript_url;
+    if (!transcriptUrl) {
+      throw new Error("Missing transcript_url in event data");
+    }
+    
     const response = await step.run("fetch-transcript", async () => {
-      return fetch(event.data.transcript_url).then((res) => res.text());
+      return fetch(transcriptUrl).then((res) => res.text());
     });
 
     const transcript = await step.run("parse-transcript", async () => {
