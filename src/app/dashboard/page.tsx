@@ -1,9 +1,7 @@
-
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import React from "react";
 import { redirect } from "next/navigation";
-
 
 const page = async () => {
   const session = await auth.api.getSession({
@@ -14,7 +12,11 @@ const page = async () => {
   }
 
 
-  return <div>Home Page</div>;
+  return <div>page</div>;
+
+
+
+
 };
 
 export default page;
