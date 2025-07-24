@@ -62,7 +62,7 @@ export default function Contact() {
   // };
 
   return (
-    <section id="contact" className="w-full py-24 bg-muted/30">
+    <section id="contact" className="px-8 lg:px-0 w-full py-24 bg-muted/30">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">Get In Touch</h2>
@@ -73,8 +73,8 @@ export default function Contact() {
         </div>
 
         <div className="flex justify-between w-full mx-auto max-w-4xl">
-          <div className="flex gap-8 w-full items-between">
-            <div className="space-y-6 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full items-between">
+            <div className="col-span-1 space-y-6 w-full">
               {contactInfo.map((info) => (
                 <Card
                   key={info.title}
@@ -97,7 +97,7 @@ export default function Contact() {
               ))}
             </div>
 
-            <div className="w-full">
+            <div className="col-span-1 w-full">
               <Card className="border-border border-1">
                 <CardHeader>
                   <CardTitle>Send us a message</CardTitle>
@@ -114,7 +114,7 @@ export default function Contact() {
                           onChange={handleChange}
                           placeholder="Your name"
                           required
-                          className="border border-border"
+                          className="placeholder:opacity-40 border-border border-1"
                         />
                       </div>
                       <div className="flex gap-2 flex-col">
@@ -127,7 +127,7 @@ export default function Contact() {
                           onChange={handleChange}
                           placeholder="your@email.com"
                           required
-                          className="border border-border"
+                          className="placeholder:opacity-40 border-border border-1"
                         />
                       </div>
                     </div>
@@ -141,7 +141,7 @@ export default function Contact() {
                         onChange={handleChange}
                         placeholder="What's this about?"
                         required
-                        className="border border-border"
+                        className="placeholder:opacity-40 border-border border-1"
                       />
                     </div>
 
@@ -155,7 +155,7 @@ export default function Contact() {
                         placeholder="Tell us more about your inquiry..."
                         rows={5}
                         required
-                        className="border border-border"
+                        className="placeholder:opacity-40 border-border border-1"
                       />
                     </div>
 

@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-24 max-w-4xl mx-auto bg-background flex flex-col"
+      className="px-8 lg:px-0 py-24 max-w-4xl mx-auto bg-background flex flex-col"
     >
       <div className="flex flex-col gap-36">
         <div className="flex flex-col gap-8">
@@ -18,21 +18,24 @@ export default function About() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 w-full h-full items-center justify-between">
+        <div className="gap-8 grid grid-cols-1 md:grid-cols-2 w-full h-full items-center justify-between">
           <div className="col-span-1 flex flex-col gap-2">
-            <h1 className="text-2xl font-bold w-full">Our Story</h1>
-            <p>
-              Asdfksajdhgkjasdhgjkasdhg asdkjhasdjknghnadsjkghnasjnkdgh akdhfi
-              uwahegiueqhgiulqwhegiliuqhwne
-              akjsjhgkunweunhguikwheeguiqhwneuigkhqw
-              qnwlegunkiwuqegnyqweuigynuiqwgy
+            <h1 className="md:text-start text-center text-2xl font-bold w-full">
+              Our Story
+            </h1>
+            <p className="text-md md:text-xl w-full text-center md:text-start">
+              Asdfksajdhgkjasdhgjkasdhg asdkjhasdjknghnadsjkgh
+              uwahegiueqhgiulqwhegiliuq akjsjhgkunweunhguikwhe
+              qnwlegunkiwuqegnyqweui
             </p>
           </div>
-          <img
-            className="rounded-2xl col-span-1"
-            alt="our image"
-            src={"/placeholder.avif"}
-          />
+          <div className="col-span-1 rounded-2xl overflow-hidden">
+            <img
+              className="object-cover"
+              alt="our image"
+              src={"/placeholder.avif"}
+            />
+          </div>
         </div>
 
         <div>
