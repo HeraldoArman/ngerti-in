@@ -50,6 +50,7 @@ const SignInView = () => {
       },
       {
         onSuccess: () => {
+          router.push("/dashboard");
           setPending(false);
         },
         onError: (error) => {

@@ -63,7 +63,7 @@ const SignUpView = () => {
       },
       {
         onSuccess: () => {
-          router.push("/");
+          router.push("/dashboard");
           setPending(false);
         },
         onError: (error) => {
