@@ -5,7 +5,6 @@ import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import { NuqsAdapter } from "nuqs/adapters/next";
 
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
