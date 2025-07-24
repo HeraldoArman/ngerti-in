@@ -95,10 +95,10 @@ export const AgentIdView = ({ agentId }: Props) => {
               <VideoIcon className="text-blue-700" />
 
             </Badge>
-            {/* <div className="flex flex-col gap-y-4">
-              <p className="text-lg font-medium">Instructions</p>
-              <p className="text-neutral-800">{data.instructions}</p>
-            </div> */}
+            <div className="flex flex-col gap-y-4">
+              <p className="text-lg font-medium">Prompt</p>
+              <p className="text-neutral-800">{data.prompt}</p>
+            </div>
           </div>
         </div>
       </div>

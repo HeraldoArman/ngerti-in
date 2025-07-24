@@ -87,7 +87,7 @@ export const AgentForm = ({
     defaultValues: {
       name: initialValues?.name || "",
       subject: initialValues?.subject || "Math",
-    //   description: initialValues?.description || "",
+      prompt: initialValues?.prompt || "",
     },
   });
 //   const [showCustomSubject, setShowCustomSubject] = useState(
@@ -101,6 +101,7 @@ export const AgentForm = ({
       updateAgent.mutate({
         ...values,
         id: initialValues.id,
+        prompt: values.prompt
       });
     } else {
       createAgent.mutate(values);
@@ -198,6 +199,25 @@ export const AgentForm = ({
               </FormItem>
             )}
           /> */}
+
+{isEdit && (
+            <FormField
+              name="prompt"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Prompt</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter custom prompt for this agent"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
           <div>
             {onCancel && (
               <Button
