@@ -28,17 +28,17 @@ export const columns: ColumnDef<AgentGetMany[number]>[] = [
       </div>
     ),
   },
-//   {
-//     accessorKey: "meetingCount",
-//     header: "Meetings",
-//     cell: ({ row }) => (
-//       <Badge
-//         variant="outline"
-//         className="flex items-center gap-x-2 px-2 py-1 text-sm"
-//       >
-//         <VideoIcon className="text-blue-700 size-4" />
-//         {/* <span className="font-medium">{row.original.meetingCount ?? 0}</span> */}
-//       </Badge>
-//     ),
-//   },
+  //   {
+  //     accessorKey: "meetingCount",
+  //     header: "Meetings",
+  //     cell: ({ row }) => (
+  //       <Badge
+  //         variant="outline"
+  //         className="flex items-center gap-x-2 px-2 py-1 text-sm"
+  //       >
+  //         <VideoIcon className="text-blue-700 size-4" />
+  //         {/* <span className="font-medium">{row.original.meetingCount ?? 0}</span> */}
+  //       </Badge>
+  //     ),
+  //   },
 ];

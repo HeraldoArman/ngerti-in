@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
-import { GraduationCap , StarIcon, VideoIcon } from "lucide-react";
+import { GraduationCap, StarIcon, VideoIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -27,7 +27,7 @@ const Section = [
     icon: GraduationCap,
     label: "Tutor",
     href: "/dashboard/tutor",
-  }
+  },
 ];
 
 export const DashboardSidebar = () => {
@@ -38,8 +38,8 @@ export const DashboardSidebar = () => {
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href={"/dashboard"} className="flex items-center gap-2 px-2 pt-2">
           <div className="flex gap-4 items-center justify-center">
-            <Image src="./logo.svg" height={24} width={24} alt="Ngerti-In" />
-            <p className="text-2xl font-semibold">Ngerti-in</p>
+            <Image src="./logo.svg" height={32} width={32} alt="Ngerti-in" />
+            <p className="text-2xl font-bold">Ngerti.in</p>
           </div>
         </Link>
       </SidebarHeader>

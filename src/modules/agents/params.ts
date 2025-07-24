@@ -1,4 +1,4 @@
-import {createLoader, parseAsInteger, parseAsString } from "nuqs/server";
+import { createLoader, parseAsInteger, parseAsString } from "nuqs/server";
 
 import { DEFAULT_PAGE } from "@/constant";
 
