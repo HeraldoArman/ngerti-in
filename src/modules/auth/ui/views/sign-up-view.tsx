@@ -71,7 +71,7 @@ const SignUpView = () => {
           setPending(false);
           console.error("Sign in error:", error);
         },
-      },
+      }
     );
   };
 
@@ -92,7 +92,7 @@ const SignUpView = () => {
           setPending(false);
           console.error("Sign in error:", error);
         },
-      },
+      }
     );
   };
 
