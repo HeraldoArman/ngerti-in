@@ -53,7 +53,9 @@ export const MeetingIdViewHeader = ({
                 asChild
                 className="font-medium text-xl text-foreground"
               >
-                <Link href={`/dashboard/meetings/${meetingId}`}>{meetingName}</Link>
+                <Link href={`/dashboard/meetings/${meetingId}`}>
+                  {meetingName}
+                </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>

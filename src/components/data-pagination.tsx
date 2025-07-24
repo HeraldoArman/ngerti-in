@@ -20,14 +20,16 @@ export const DataPagination = ({ page, totalPages, onPageChange }: Props) => {
             variant={"outline"}
             size={"sm"}
             onClick={() => onPageChange(Math.max(1, page - 1))}
+            className="cursor-pointer"
           >
-            previous
+            Previous
           </Button>
           <Button
             disabled={page === totalPages || totalPages === 0}
             onClick={() => onPageChange(Math.min(totalPages, page + 1))}
             variant={"outline"}
             size={"sm"}
+            className="cursor-pointer"
           >
             Next
           </Button>

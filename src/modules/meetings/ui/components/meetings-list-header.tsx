@@ -11,7 +11,6 @@ import { useMeetingsFilters } from "../../hooks/use-meeting-filters";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { DEFAULT_PAGE } from "@/constant";
 
-
 export const MeetingsListHeader = () => {
   const [filters, setFilters] = useMeetingsFilters();
   const [isDialogeOpen, setisDialogeOpen] = useState(false);
@@ -37,20 +36,19 @@ export const MeetingsListHeader = () => {
           </Button>
         </div>
         <ScrollArea>
-
-        <div className="flex items-center gap-x-2 p-1">
-          <MeetingsSearchFilter />
-          <StatusFilter />
-          <AgentIdFilter />
-          {isAnyFilterModified && (
-            <Button variant="outline" onClick={onClearFilters}>
-              <XCircleIcon className="size-4" />
-              Clear
-            </Button>
-          )}
-        </div>
-        <ScrollBar orientation="horizontal"/>
-          </ScrollArea>
+          <div className="flex items-center gap-x-2 p-1">
+            <MeetingsSearchFilter />
+            <StatusFilter />
+            <AgentIdFilter />
+            {isAnyFilterModified && (
+              <Button variant="outline" onClick={onClearFilters}>
+                <XCircleIcon className="size-4" />
+                Clear
+              </Button>
+            )}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </div>
     </>
   );

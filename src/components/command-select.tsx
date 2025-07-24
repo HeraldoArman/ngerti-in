@@ -42,8 +42,7 @@ export const CommandSelect = ({
   const handleOpenChange = (open: boolean) => {
     onSearch?.("");
     setOpen(open);
-  }
-
+  };
 
   return (
     <>
@@ -54,13 +53,17 @@ export const CommandSelect = ({
         className={cn(
           "h-9 justify-between font-normal px-2",
           !selectedOption && "text-muted-foreground",
-          className
+          className,
         )}
       >
         <div>{selectedOption?.children ?? placeholder}</div>
         <ChevronsUpDownIcon />
       </Button>
-      <CommandResponsiveDialog open={open} onOpenChange={handleOpenChange} shouldFilter={!onSearch}>
+      <CommandResponsiveDialog
+        open={open}
+        onOpenChange={handleOpenChange}
+        shouldFilter={!onSearch}
+      >
         <CommandInput placeholder="Search..." onValueChange={onSearch} />
         <CommandList>
           <CommandEmpty>

@@ -32,11 +32,11 @@ export const MeetingIdView = ({ meetingId }: MeetingIdViewProps) => {
 
   const [RemoveConfirmation, confirmRemove] = useConfirm(
     "Are you sure?",
-    "The following action will remove this meeting"
+    "The following action will remove this meeting",
   );
 
   const { data } = useSuspenseQuery(
-    trpc.meetings.getOne.queryOptions({ id: meetingId })
+    trpc.meetings.getOne.queryOptions({ id: meetingId }),
   );
 
   const removeMeeting = useMutation(
@@ -49,7 +49,7 @@ export const MeetingIdView = ({ meetingId }: MeetingIdViewProps) => {
         console.error("Failed to remove meeting:", error);
         toast.error(error.message || "Failed to remove meeting");
       },
-    })
+    }),
   );
 
   const handleRemoveMeeting = async () => {
