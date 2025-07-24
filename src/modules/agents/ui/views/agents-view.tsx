@@ -20,7 +20,9 @@ export const AgentsView = () => {
   );
 
   return (
+
     <div className="max-h-126 h-full pb-4 px-4 md:px-8 flex flex-col gap-y-4">
+
       <DataTable
         data={data.items}
         columns={columns}
