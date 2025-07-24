@@ -13,6 +13,7 @@ const Page = async () => {
   if (!!session) {
     redirect("/dashboard");
   }
+
   return (
     <>
       <SignUpView />

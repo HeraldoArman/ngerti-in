@@ -34,16 +34,13 @@ export const DashboardNavbar = () => {
           )}
         </Button>
         <Button
-          variant={"outline"}
-          className="h-9 w-[240px] justify-start font-normal text-muted-foreground hover:text-muted-foreground"
+          variant={"ghost"}
+          className="bg-black/5 border border-border cursor-text h-9 w-[240px] justify-start font-normal text-muted-foreground hover:text-muted-foreground"
           size={"sm"}
           onClick={() => setCommandOpen((open) => !open)}
         >
           <SearchIcon />
           Search
-          <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-            <span className="text-xs">&#8984;</span>
-          </kbd>
         </Button>
       </nav>
     </>
