@@ -135,10 +135,10 @@ export const agentsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(agentsInsertSchema)
     .mutation(async ({ input, ctx }) => {
-      const { name, subject, description } = input;
+      const { name, subject, prompt } = input;
 
-      const prompt = agentPrompts[subject as keyof typeof agentPrompts];
-      if (!prompt) {
+      const resolvedPrompt = agentPrompts[subject as keyof typeof agentPrompts];
+      if (!resolvedPrompt) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Prompt not found for the selected subject",
@@ -151,7 +151,7 @@ export const agentsRouter = createTRPCRouter({
       .values({
         name,
         subject,
-        prompt,
+        prompt: resolvedPrompt,
         userId: ctx.userId.user.id, // should be user_id in your schema
         // description, // only if this column exists
       })

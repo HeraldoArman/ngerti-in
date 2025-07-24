@@ -10,7 +10,7 @@ export const agentsInsertSchema = z.object({
     "Social Science",
     "English",
   ]),
-  description: z.string().optional(),
+  prompt: z.string().optional(),
   // Remove customSubject and prompt if not needed
 });
 
