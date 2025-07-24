@@ -20,13 +20,11 @@ const Hero = () => {
         </p>
         <div className="mt-6 flex flex-col sm:flex-row items-center sm:gap-4 w-fit mx-auto">
           <Button variant={"secondary"} className="cursor-pointer">
-            Hello
+            Get Started!
           </Button>
         </div>
         <Image
-          src={
-            "https://images.unsplash.com/photo-1751647670942-3fe932006357?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8"
-          }
+          src={"./macbookpro.png"}
           width={384}
           height={340}
           quality={100}

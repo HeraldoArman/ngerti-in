@@ -57,7 +57,7 @@ const SignInView = () => {
           setPending(false);
           console.error("Sign in error:", error);
         },
-      }
+      },
     );
   };
 
@@ -80,7 +80,7 @@ const SignInView = () => {
           setPending(false);
           console.error("Sign in error:", error);
         },
-      }
+      },
     );
   };
 
@@ -92,9 +92,9 @@ const SignInView = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">welcome back</h1>
+                  <h1 className="text-2xl font-bold">Welcome Back!</h1>
                   <p className="text-muted-foreground text-balance">
-                    Login to yout account
+                    Log in to your account
                   </p>
                 </div>
                 <div className="grid gap-3">
@@ -106,6 +106,7 @@ const SignInView = () => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
+                            className="placeholder:opacity-40 border-border border-1"
                             type="email"
                             placeholder="m@example.com"
                             {...field}
@@ -122,9 +123,10 @@ const SignInView = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>password</FormLabel>
+                        <FormLabel>Password</FormLabel>
                         <FormControl>
                           <Input
+                            className="placeholder:opacity-40 border-border border-1"
                             type="password"
                             placeholder="********"
                             {...field}
@@ -156,8 +158,8 @@ const SignInView = () => {
                   <Button
                     type="button"
                     disabled={pending}
-                    variant="outline"
-                    className="w-full"
+                    variant="secondary"
+                    className="w-full cursor-pointer"
                     onClick={() => {
                       onSocial("google");
                     }}
@@ -180,7 +182,6 @@ const SignInView = () => {
 
           <div className="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
             <img src="/logo.svg" alt="image" className="h-[92px] w-[92px]" />
-            <p className="text-2xl font-semibold text-white">Ngerti-In</p>
           </div>
         </CardContent>
       </Card>
