@@ -14,8 +14,8 @@ export default function Navbar() {
         </Link>
         <div className="flex gap-4 text-md">
           <Link href="#features">Features</Link>
-          <Link href="#contact">Contact</Link>
           <Link href="#about">About</Link>
+          <Link href="#contact">Contact</Link>
         </div>
         <Button variant="secondary" className="cursor-pointer">
           Sign In
