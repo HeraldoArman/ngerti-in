@@ -5,7 +5,7 @@ import { ResponsiveDialog } from "@/components/responsive-dialog";
 
 export const useConfirm = (
   title: string,
-  description: string,
+  description: string
 ): [() => JSX.Element, () => Promise<unknown>] => {
   const [promise, setPromise] = useState<{
     resolve: (value: boolean) => void;

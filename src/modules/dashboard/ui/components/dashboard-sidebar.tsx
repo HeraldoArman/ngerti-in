@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
-import { GraduationCap , StarIcon, VideoIcon } from "lucide-react";
+import { GraduationCap, StarIcon, VideoIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -27,7 +27,7 @@ const Section = [
     icon: GraduationCap,
     label: "Tutor",
     href: "/dashboard/tutor",
-  }
+  },
 ];
 
 export const DashboardSidebar = () => {
