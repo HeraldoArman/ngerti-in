@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="pt-24 pb-8 max-w-4xl mx-auto bg-background flex flex-col"
+      className="py-24 max-w-4xl mx-auto bg-background flex flex-col"
     >
       <div className="flex flex-col gap-36">
         <div className="flex flex-col gap-8">
