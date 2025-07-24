@@ -14,7 +14,7 @@ export const AgentIdFilter = () => {
     trpc.agents.getMany.queryOptions({
       pageSize: 100,
       search: agentSearch,
-    })
+    }),
   );
 
   return (

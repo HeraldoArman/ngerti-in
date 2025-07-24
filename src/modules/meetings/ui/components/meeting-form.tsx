@@ -14,7 +14,7 @@ import {
   FormField,
   FormLabel,
   FormMessage,
-	FormDescription,
+  FormDescription,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -48,14 +48,14 @@ export const MeetingForm = ({
     trpc.agents.getMany.queryOptions({
       pageSize: 100, // Adjust as needed
       search: agentSearch, // Use the search term from state
-    })
+    }),
   );
 
   const createMeeting = useMutation(
     trpc.meetings.create.mutationOptions({
       onSuccess: async (data) => {
         await queryClient.invalidateQueries(
-          trpc.meetings.getMany.queryOptions({})
+          trpc.meetings.getMany.queryOptions({}),
         );
 
         onSuccess?.(data.id);
@@ -64,19 +64,19 @@ export const MeetingForm = ({
         toast.error(error.message);
         // TODO: check if error is a TRPC error and handle accordingly
       },
-    })
+    }),
   );
 
   const updateMeeting = useMutation(
     trpc.meetings.update.mutationOptions({
       onSuccess: async () => {
         await queryClient.invalidateQueries(
-          trpc.meetings.getMany.queryOptions({})
+          trpc.meetings.getMany.queryOptions({}),
         );
 
         if (initialValues?.id) {
           await queryClient.invalidateQueries(
-            trpc.meetings.getOne.queryOptions({ id: initialValues.id })
+            trpc.meetings.getOne.queryOptions({ id: initialValues.id }),
           );
         }
         onSuccess?.();
@@ -85,7 +85,7 @@ export const MeetingForm = ({
         toast.error(error.message);
         // TODO: check if error is a TRPC error and handle accordingly
       },
-    })
+    }),
   );
 
   const form = useForm<z.infer<typeof meetingsInsertSchema>>({
@@ -111,7 +111,10 @@ export const MeetingForm = ({
 
   return (
     <>
-			<NewAgentDialog open={openANewAgentDialog} onOpenChange={setOpenNewAgentDialog}/>
+      <NewAgentDialog
+        open={openANewAgentDialog}
+        onOpenChange={setOpenNewAgentDialog}
+      />
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -155,16 +158,16 @@ export const MeetingForm = ({
                     placeholder="Select an agent"
                   />
                 </FormControl>
-								<FormDescription>
-									Not Found what you are looking for?{" "}
-									<button
-										type="button"	
-										onClick={() => setOpenNewAgentDialog(true)}
-										className="text-primary hover:underline"
-									>
-										Create new agent
-									</button>
-								</FormDescription>
+                <FormDescription>
+                  Not Found what you are looking for?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setOpenNewAgentDialog(true)}
+                    className="text-primary hover:underline"
+                  >
+                    Create new agent
+                  </button>
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
