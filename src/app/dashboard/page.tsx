@@ -14,7 +14,7 @@ const page = async () => {
   }
 
 
-  return <div>page</div>;
+  return <div>Home Page</div>;
 };
 
 export default page;
