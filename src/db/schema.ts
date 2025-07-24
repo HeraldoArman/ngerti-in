@@ -55,10 +55,10 @@ export const verification = pgTable("verification", {
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
+    () => /* @__PURE__ */ new Date()
   ),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
+    () => /* @__PURE__ */ new Date()
   ),
 });
 
@@ -68,7 +68,7 @@ export const mataPelajaran = pgEnum("mata_pelajaran", [
   "Natural Science",
   "Social Science",
   "English",
-  "Other",
+  // "Other",
 ]);
 
 const prompt = {
@@ -101,10 +101,8 @@ export const agents = pgTable("agents", {
   createdAt: timestamp("created_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
-
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date()),
-
 });
 
 
@@ -137,6 +135,6 @@ export const meetings = pgTable("meetings", {
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
   updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
+    () => /* @__PURE__ */ new Date()
   ),
 });
