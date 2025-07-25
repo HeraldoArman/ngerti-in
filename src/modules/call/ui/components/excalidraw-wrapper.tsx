@@ -82,29 +82,29 @@ const ExcalidrawWrapper = ({
 
       const data = await res.json();
 
-      if (data?.answer && api) {
-        setAiResponse(data.answer);
+      // if (data?.answer && api) {
+        // setAiResponse(data.answer);
         
         // Create text element manually
-        const textElement = {
-          id: `ai-${Date.now()}`,
-          type: "text",
-          x: 100,
-          y: 300,
-          width: 300,
-          height: 100,
-          text: data.answer,
-          fontSize: 24,
-          strokeColor: "#8000ff",
-          fontFamily: 1,
+        // const textElement = {
+          // id: `ai-${Date.now()}`,
+          // type: "text",
+          // x: 100,
+          // y: 300,
+          // width: 300,
+          // height: 100,
+          // text: data.answer,
+          // fontSize: 24,
+          // strokeColor: "#8000ff",
+          // fontFamily: 1,
           // Add other required properties
-        } as any;
+        // } as any;
         
         // Add to scene
-        api.updateScene({
-          elements: [...elements, textElement]
-        });
-      }
+        // api.updateScene({
+        //   elements: [...elements, textElement]
+        // });
+      // }
     } catch (error) {
       console.error("Error asking AI:", error);
     } finally {

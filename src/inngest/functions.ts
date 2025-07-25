@@ -1,10 +1,19 @@
+import { streamVideo } from "@/lib/stream-video";
 import JSONL from "jsonl-parse-stringify";
-import { inngest } from "@/inngest/client";
+// ❌ Remove this line - causing circular dependency
+// import { inngest } from "@/inngest/client";
 import { StreamTranscriptItem } from "@/modules/meetings/types";
 import { db } from "@/db";
 import { user, agents, meetings } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { createAgent, openai, TextMessage } from "@inngest/agent-kit";
+import { Inngest } from "inngest"; // ✅ Import Inngest directly
+// import { real } from "drizzle-orm/gel-core";
+
+// ✅ Create inngest client here instead of importing
+const inngest = new Inngest({ 
+  id: "ngerti-in",
+});
 
 const summarizer = createAgent({
   name: "summarizer",
@@ -31,12 +40,11 @@ Example:
 - Feature X automatically does Y
 - Mention of integration with Z
 
-
 `.trim(),
   model: openai({ model: "gpt-4o", apiKey: process.env.OPENAI_API_KEY }),
 });
 
-export const meetingsProcessing = inngest.createFunction(
+const meetingsProcessing = inngest.createFunction(
   { id: "meetings/processing" },
   { event: "meetings/processing" },
   async ({ event, step }) => {
@@ -100,3 +108,99 @@ export const meetingsProcessing = inngest.createFunction(
     });
   },
 );
+
+// Add this at the top of functions.ts to track active polling
+const activePolling = new Set<string>();
+const pollAgentPrompt = inngest.createFunction(
+  { id: "poll-agent-prompt" },
+  { event: "agent/prompt.poll" },
+  async ({ event, step }) => {
+    console.log("🎯 [INNGEST] pollAgentPrompt started with data:", event.data);
+    
+    const { agentId, meetingId } = event.data;
+    const pollingKey = `${meetingId}-${agentId}`;
+
+    // ✅ Prevent multiple polling for same meeting/agent
+    if (activePolling.has(pollingKey)) {
+      console.log("🛑 Polling already active for:", pollingKey);
+      return;
+    }
+
+    activePolling.add(pollingKey);
+
+    try {
+      const [agent] = await db
+        .select()
+        .from(agents)
+        .where(eq(agents.id, agentId));
+
+      if (!agent) {
+        console.error("❌ Agent not found:", agentId);
+        activePolling.delete(pollingKey);
+        return;
+      }
+
+      // ✅ Create connection and loop inside step.run()
+      await step.run("connect-and-update-loop", async () => {
+        const call = streamVideo.video.call("default", meetingId);
+        const realtimeClient = await streamVideo.video.connectOpenAi({
+          call,
+          openAiApiKey: process.env.OPENAI_API_KEY!,
+          agentUserId: agentId,
+        });
+
+        console.log("✅ Agent connected to call:", agentId);
+
+        // ✅ Set up event listener ONCE outside the loop
+        realtimeClient.on("conversation.updated", (instruction: any) => {
+          console.log(`📡 received conversation.updated`, instruction);
+        });
+
+        // ✅ Wait for connection to be ready
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        let previousPrompt = "";
+
+        // ✅ Loop inside step.run() - connection dibuat sekali, update berkali-kali
+        while (true) {
+          try {
+            const [latestAgent] = await db
+              .select()
+              .from(agents)
+              .where(eq(agents.id, agentId));
+
+            if (latestAgent) {
+              // ✅ Only update if prompt has changed
+              if (latestAgent.prompt !== previousPrompt) {
+                console.log("🔄 Prompt changed, updating session...");
+                console.log("📝 New prompt:", latestAgent.prompt.substring(0, 200) + "...");
+                
+                await realtimeClient.updateSession({
+                  instructions: latestAgent.prompt,
+                });
+                
+                previousPrompt = latestAgent.prompt;
+                console.log("✅ Session updated with new instructions");
+              } else {
+                console.log("⏭️ No prompt change, skipping update");
+              }
+            }
+
+            // Wait 1 second before next check
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+          } catch (updateError) {
+            console.error("❌ Update error:", updateError);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+        }
+      });
+
+    } catch (error) {
+      console.error("❌ Error in pollAgentPrompt:", error);
+    } finally {
+      activePolling.delete(pollingKey);
+    }
+  }
+);
+export { meetingsProcessing, pollAgentPrompt, inngest };
