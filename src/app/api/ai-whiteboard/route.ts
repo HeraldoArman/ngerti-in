@@ -8,6 +8,8 @@ import { agents, meetings } from "@/db/schema";
 // import { createWorker } from "tesseract.js";
 // import { StreamChat } from "stream-chat";
 import { streamChat } from "@/lib/stream-chat";
+// import {realtimeClient} from "web";
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
 export async function POST(req: NextRequest) {
@@ -62,8 +64,12 @@ export async function POST(req: NextRequest) {
     ]
       .filter(Boolean)
       .join("\n\n") || "Whiteboard is empty or contains only drawings.";
-    console.log(texts.length ? "Texts found on whiteboard:" : "No texts found on whiteboard.");
-    console.log("Whiteboard Summary:", whiteboardSummary);
+  console.log(
+    texts.length
+      ? "Texts found on whiteboard:"
+      : "No texts found on whiteboard."
+  );
+  console.log("Whiteboard Summary:", whiteboardSummary);
   // 4. Query DB untuk agent dan meeting
   const [meeting] = await db
     .select()
@@ -89,51 +95,26 @@ export async function POST(req: NextRequest) {
 
   // 5. Generate jawaban AI (OpenAI)
   // 5. Generate AI response (OpenAI)
-  const prompt = `
-  [Whiteboard content]
-  ${whiteboardSummary}
+  const updatedPrompt = `
+${agent.prompt}
 
-  Your task: Explain, help, or answer user questions based on the whiteboard content above.
-  Respond in English, keep it concise and easy to understand.
+[WHITEBOARD CONTEXT - LIVE UPDATE]
+${whiteboardSummary}
+
+Note: The above whiteboard content is the latest visual information shared by participants. Use this context to better understand the current discussion and provide more relevant responses.
 `;
 
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: [
-      { role: "system", content: agent.prompt },
-      { role: "user", content: prompt },
-    ],
-  });
-  const answer = completion.choices[0]?.message?.content?.trim() ?? "";
+  await db
+    .update(agents)
+    .set({
+      prompt: updatedPrompt,
+      updatedAt: new Date(),
+    })
+    .where(eq(agents.id, agent.id));
 
-  try {
-    const call = streamVideo.video.call("default", meetingId);
-    const realtimeClient = await streamVideo.video.connectOpenAi({
-      call,
-      openAiApiKey: process.env.OPENAI_API_KEY!,
-      agentUserId: agent.id,
-    });
-    await realtimeClient.updateSession({
-      instructions: `${agent.prompt}\n\n[Update Whiteboard]\n${whiteboardSummary}`,
-    });
+
+ 
+
   
-    // Fix: Specify the channel creator when creating/watching the channel
-    // const channel = streamChat.channel("messaging", meetingId, {
-    //   created_by_id: agent.id, // Add this field
-    //   name: `Meeting ${meetingId}`,
-    //   members: [agent.id], // Optional: specify members
-    // });
-    
-    // await channel.watch();
-    
-    // await channel.sendMessage({
-    //   text: answer,
-    //   user: { id: agent.id, name: agent.name },
-    // });
-  } catch (streamError) {
-    console.error("Stream API Error:", streamError);
-    // Continue even if streaming fails
-  }
-
-  return NextResponse.json({ answer });
+    return new NextResponse(null, { status: 204 });
 }

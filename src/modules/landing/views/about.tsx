@@ -10,11 +10,11 @@ export default function About() {
       <div className="flex flex-col gap-36">
         <div className="flex flex-col gap-8">
           <h1 className="w-full text-center font-bold text-4xl">
-            About <span className="text-primary">Ngerti.in</span>
+            About <span className="text-primary">Ngerti.In</span>
           </h1>
           <p className="text-xl w-full text-center">
-            Have you ever struggle to understand teacher&apos;s lecture in
-            class? Well, You&apos;re not alone, in today's classroom, many
+            Have you ever struggled to understand teacher&apos;s lecture in
+            class? Well, You&apos;re not alone. In today's classroom, many
             students feel lost. Ngerti.In is designed to offers an active and
             personal learning experience, as if they have their own private
             tutor. Whether you're solving equations, brainstorming ideas, or
@@ -33,7 +33,7 @@ export default function About() {
                   <div className="rounded-[50%] size-32 overflow-hidden">
                     <img
                       className="size-full object-cover"
-                      src="/placeholder.avif"
+                      src={member.image}
                       alt={member.name}
                     />
                   </div>

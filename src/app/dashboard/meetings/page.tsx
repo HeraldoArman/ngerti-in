@@ -41,7 +41,6 @@ const page = async ({ searchParams }: Props) => {
     trpc.meetings.getMany.queryOptions({ ...filters }),
   );
 
-
   return (
     <>
       <MeetingsListHeader />
