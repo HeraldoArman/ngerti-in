@@ -12,7 +12,7 @@ export const EmptyState = ({
   image = "/empty.svg",
 }: Props) => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col gap-8 items-center justify-center">
       <Image src={image} alt="Empty" width={240} height={240} />
       <div className="flex flex-col gap-y-6 max-w-md mx-auto text-center">
         <h6 className="text-lg font-medium">{title}</h6>
