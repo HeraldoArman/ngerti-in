@@ -56,8 +56,8 @@ export default function Analytics() {
       {cards.map((card, index) => {
         const IconComponent = card.icon;
         return (
-          <Card 
-            key={index} 
+          <Card
+            key={index}
             className="group relative overflow-hidden border-0 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
           >
             <CardContent className="p-6">
@@ -75,15 +75,21 @@ export default function Analytics() {
                     )}
                   </div>
                 </div>
-                <div className={`${card.bgColor} ${card.hoverBg} ${card.color} ${card.hoverColor} p-3 rounded-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                <div
+                  className={`${card.bgColor} ${card.hoverBg} ${card.color} ${card.hoverColor} p-3 rounded-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
+                >
                   <IconComponent className="w-6 h-6" />
                 </div>
               </div>
               {/* Subtle background decoration */}
-              <div className={`absolute -right-4 -bottom-4 w-24 h-24 ${card.bgColor} opacity-20 rounded-full group-hover:opacity-30 group-hover:scale-110 transition-all duration-300`} />
-              
+              <div
+                className={`absolute -right-4 -bottom-4 w-24 h-24 ${card.bgColor} opacity-20 rounded-full group-hover:opacity-30 group-hover:scale-110 transition-all duration-300`}
+              />
+
               {/* Hover gradient overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${card.bgColor.replace('bg-', 'from-')}/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${card.bgColor.replace("bg-", "from-")}/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              />
             </CardContent>
           </Card>
         );
