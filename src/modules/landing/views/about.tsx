@@ -13,29 +13,13 @@ export default function About() {
             About <span className="text-primary">Ngerti.in</span>
           </h1>
           <p className="text-xl w-full text-center">
-            Lorem ipsum dolor sit amet blahblahblah blahblahblahblahfl asd
-            saghaskdjghasdkd ghaskjdg asdg kjlashdgkl ashdgjkasdg.
+            Have you ever struggle to understand teacher&apos;s lecture in
+            class? Well, You&apos;re not alone, in today's classroom, many
+            students feel lost. Ngerti.In is designed to offers an active and
+            personal learning experience, as if they have their own private
+            tutor. Whether you're solving equations, brainstorming ideas, or
+            stuck on a concept, Ngerti.In is here to help.
           </p>
-        </div>
-
-        <div className="gap-8 grid grid-cols-1 md:grid-cols-2 w-full h-full items-center justify-between">
-          <div className="col-span-1 flex flex-col gap-2">
-            <h1 className="md:text-start text-center text-2xl font-bold w-full">
-              Our Story
-            </h1>
-            <p className="text-md md:text-xl w-full text-center md:text-start">
-              Asdfksajdhgkjasdhgjkasdhg asdkjhasdjknghnadsjkgh
-              uwahegiueqhgiulqwhegiliuq akjsjhgkunweunhguikwhe
-              qnwlegunkiwuqegnyqweui
-            </p>
-          </div>
-          <div className="col-span-1 rounded-2xl overflow-hidden">
-            <img
-              className="object-cover"
-              alt="our image"
-              src={"/placeholder.avif"}
-            />
-          </div>
         </div>
 
         <div>
