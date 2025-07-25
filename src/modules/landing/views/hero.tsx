@@ -23,7 +23,9 @@ const Hero = () => {
         </p>
         <div className="mt-6 flex flex-col sm:flex-row items-center sm:gap-4 w-fit mx-auto">
           <Link href={"/sign-in"}>
-            <Button className="cursor-pointer">Get Started!</Button>
+            <Button className="h-12 w-48 font-semibold text-xl cursor-pointer">
+              Get Started!
+            </Button>
           </Link>
         </div>
         <Image

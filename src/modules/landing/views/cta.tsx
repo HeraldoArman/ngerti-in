@@ -11,7 +11,7 @@ export default function CTA() {
           <span className="text-accent-foreground">Way of Learning?</span>
         </div>
         <Link href={"/sign-in"}>
-          <Button className="cursor-pointer">
+          <Button className="font-semibold h-12 w-54 text-xl cursor-pointer">
             <Star />
             Join us now!
           </Button>
