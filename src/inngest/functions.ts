@@ -40,17 +40,15 @@ export const meetingsProcessing = inngest.createFunction(
   { id: "meetings/processing" },
   { event: "meetings/processing" },
   async ({ event, step }) => {
-
     const transcriptUrl = event.data.transcript_url;
     if (!transcriptUrl) {
       throw new Error("Missing transcript_url in event data");
     }
-    console.log(transcriptUrl)
-    
+    console.log(transcriptUrl);
+
     const response = await step.run("fetch-transcript", async () => {
       return fetch(transcriptUrl).then((res) => res.text());
     });
-
 
     const transcript = await step.run("parse-transcript", async () => {
       return JSONL.parse<StreamTranscriptItem>(response);
@@ -73,15 +71,17 @@ export const meetingsProcessing = inngest.createFunction(
 
       const speakers = [...userSpeakers, ...agentSpeakers];
 
-return transcript.map((item) => {
-    const speaker = speakers.find((speaker) => speaker.id === item.speaker_id);
-    return {
-      ...item,
-      user: {
-        name: speaker ? speaker.name : "Unknown",
-      },
-    };
-  });
+      return transcript.map((item) => {
+        const speaker = speakers.find(
+          (speaker) => speaker.id === item.speaker_id,
+        );
+        return {
+          ...item,
+          user: {
+            name: speaker ? speaker.name : "Unknown",
+          },
+        };
+      });
     });
 
     const { output } = await summarizer.run(

@@ -20,12 +20,12 @@ interface TranscriptProps {
 export const Transcript = ({ meetingId }: TranscriptProps) => {
   const trpc = useTRPC();
   const { data } = useQuery(
-    trpc.meetings.getTranscript.queryOptions({ id: meetingId })
+    trpc.meetings.getTranscript.queryOptions({ id: meetingId }),
   );
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = (data ?? []).filter((item) =>
-    item.text?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    item.text?.toString().toLowerCase().includes(searchQuery.toLowerCase()),
   );
   return (
     <>
@@ -53,15 +53,21 @@ export const Transcript = ({ meetingId }: TranscriptProps) => {
                           seed: item.user.name,
                           variant: "initials",
                         })
-                    }
-                    alt="User Avatar"
+                      }
+                      alt="User Avatar"
                     />
                   </Avatar>
                   <p className="text-sm font-medium">{item.user.name}</p>
-                  <p className="text-sm text-blue-500 font-medium">{format(new Date(0,0,0,0,0,0,item.start_ts),"mm:ss")}</p>
+                  <p className="text-sm text-blue-500 font-medium">
+                    {format(new Date(0, 0, 0, 0, 0, 0, item.start_ts), "mm:ss")}
+                  </p>
                 </div>
                 <Highlighter
-                className="text-sm text-neutral-700" highlightClassName="bg-yellow" searchWords={[searchQuery]} autoEscape={true} textToHighlight={item.text}
+                  className="text-sm text-neutral-700"
+                  highlightClassName="bg-yellow"
+                  searchWords={[searchQuery]}
+                  autoEscape={true}
+                  textToHighlight={item.text}
                 />
               </div>
             ))}

@@ -21,7 +21,6 @@ import { CancelledState } from "../components/cancelled-state";
 import { ProcessingState } from "../components/processing-state";
 import { CompletedState } from "../components/completed-state";
 
-
 interface MeetingIdViewProps {
   meetingId: string;
 }
