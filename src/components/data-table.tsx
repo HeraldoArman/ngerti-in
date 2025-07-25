@@ -13,12 +13,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onRowClick?: (row: TData) => void;
+  type: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   onRowClick,
+  type,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -27,7 +29,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="overflow-x-hidden rounded-lg border bg-background overflow-scroll max-h-full">
+    <div className="h-full overflow-x-hidden rounded-lg border bg-background overflow-scroll max-h-full">
       <Table>
         <TableBody>
           {table.getRowModel().rows?.length ? (
@@ -46,12 +48,14 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))
           ) : (
-            <TableRow>
+            <TableRow className="!bg-transparent !hover:bg-transparent !cursor-default">
               <TableCell
                 colSpan={columns.length}
-                className="h-19 text-center text-muted-foreground"
+                className="h-96 text-center align-middle"
               >
-                No results.
+                <div className="flex items-center justify-center w-full h-full">
+                  Oops! It seems that you haven't made any {type} yet!
+                </div>
               </TableCell>
             </TableRow>
           )}
