@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -20,9 +21,9 @@ const Hero = () => {
           whiteboard explainations and real-time voice integrations.
         </p>
         <div className="mt-6 flex flex-col sm:flex-row items-center sm:gap-4 w-fit mx-auto">
-          <Button variant={"secondary"} className="cursor-pointer">
-            Get Started!
-          </Button>
+          <Link href={"/sign-in"}>
+            <Button className="cursor-pointer">Get Started!</Button>
+          </Link>
         </div>
         <Image
           src={"./macbookpro.png"}

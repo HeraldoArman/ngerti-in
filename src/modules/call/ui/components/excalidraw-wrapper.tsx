@@ -26,9 +26,7 @@ const ExcalidrawWrapper = ({
 
   // SOLUSI: Validasi aman di sini
   const safeInitialData = {
-    elements: Array.isArray(initialData?.elements)
-      ? initialData.elements
-      : [],
+    elements: Array.isArray(initialData?.elements) ? initialData.elements : [],
     appState: initialData?.appState || {
       viewBackgroundColor: "#ffffff",
       currentItemFontFamily: 1,
@@ -84,7 +82,7 @@ const ExcalidrawWrapper = ({
 
       if (data?.answer && api) {
         setAiResponse(data.answer);
-        
+
         // Create text element manually
         const textElement = {
           id: `ai-${Date.now()}`,
@@ -99,10 +97,10 @@ const ExcalidrawWrapper = ({
           fontFamily: 1,
           // Add other required properties
         } as any;
-        
+
         // Add to scene
         api.updateScene({
-          elements: [...elements, textElement]
+          elements: [...elements, textElement],
         });
       }
     } catch (error) {

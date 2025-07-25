@@ -21,7 +21,7 @@ const ExcalidrawWrapper = dynamic(
       </div>
     ),
     ssr: false,
-  }
+  },
 );
 
 export const CallUI = ({ meetingName }: { meetingName: string }) => {

@@ -1,7 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SpeakerLayout, useCallStateHooks, useCall } from "@stream-io/video-react-sdk";
-import { Mic, MicOff, PhoneOff, Monitor, MonitorOff, Palette } from "lucide-react";
+import {
+  SpeakerLayout,
+  useCallStateHooks,
+  useCall,
+} from "@stream-io/video-react-sdk";
+import {
+  Mic,
+  MicOff,
+  PhoneOff,
+  Monitor,
+  MonitorOff,
+  Palette,
+} from "lucide-react";
 // import { useState } from "react";
 
 interface CallActiveProps {
@@ -10,7 +21,11 @@ interface CallActiveProps {
   isWhiteboardOpen?: boolean;
 }
 
-export const CallActive = ({ meetingName, onWhiteboardToggle, isWhiteboardOpen }: CallActiveProps) => {
+export const CallActive = ({
+  meetingName,
+  onWhiteboardToggle,
+  isWhiteboardOpen,
+}: CallActiveProps) => {
   const call = useCall();
   const { useMicrophoneState, useScreenShareState } = useCallStateHooks();
   const { microphone, isMute } = useMicrophoneState();
@@ -23,7 +38,6 @@ export const CallActive = ({ meetingName, onWhiteboardToggle, isWhiteboardOpen }
       await microphone.disable();
     }
   };
-
 
   const handleLeave = async () => {
     await call?.leave();
@@ -51,13 +65,17 @@ export const CallActive = ({ meetingName, onWhiteboardToggle, isWhiteboardOpen }
         <button
           onClick={handleMicToggle}
           className={`p-3 rounded-full transition-all duration-200 ${
-            isMute 
-              ? 'bg-red-500 hover:bg-red-600 text-white' 
-              : 'bg-white/10 hover:bg-white/20 text-white'
+            isMute
+              ? "bg-red-500 hover:bg-red-600 text-white"
+              : "bg-white/10 hover:bg-white/20 text-white"
           }`}
           title={isMute ? "Unmute" : "Mute"}
         >
-          {isMute ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+          {isMute ? (
+            <MicOff className="w-5 h-5" />
+          ) : (
+            <Mic className="w-5 h-5" />
+          )}
         </button>
 
         {/* Screen Share Toggle */}
@@ -77,9 +95,9 @@ export const CallActive = ({ meetingName, onWhiteboardToggle, isWhiteboardOpen }
         <button
           onClick={onWhiteboardToggle}
           className={`p-3 rounded-full transition-all duration-200 ${
-            isWhiteboardOpen 
-              ? 'bg-purple-500 hover:bg-purple-600 text-white' 
-              : 'bg-white/10 hover:bg-white/20 text-white'
+            isWhiteboardOpen
+              ? "bg-purple-500 hover:bg-purple-600 text-white"
+              : "bg-white/10 hover:bg-white/20 text-white"
           }`}
           title={isWhiteboardOpen ? "Close whiteboard" : "Open whiteboard"}
         >

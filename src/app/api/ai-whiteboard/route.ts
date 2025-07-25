@@ -62,8 +62,12 @@ export async function POST(req: NextRequest) {
     ]
       .filter(Boolean)
       .join("\n\n") || "Whiteboard is empty or contains only drawings.";
-    console.log(texts.length ? "Texts found on whiteboard:" : "No texts found on whiteboard.");
-    console.log("Whiteboard Summary:", whiteboardSummary);
+  console.log(
+    texts.length
+      ? "Texts found on whiteboard:"
+      : "No texts found on whiteboard.",
+  );
+  console.log("Whiteboard Summary:", whiteboardSummary);
   // 4. Query DB untuk agent dan meeting
   const [meeting] = await db
     .select()
@@ -72,7 +76,7 @@ export async function POST(req: NextRequest) {
   if (!meeting) {
     return NextResponse.json(
       { error: "Meeting tidak ditemukan" },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
@@ -83,7 +87,7 @@ export async function POST(req: NextRequest) {
   if (!agent) {
     return NextResponse.json(
       { error: "AI Agent tidak ditemukan" },
-      { status: 404 }
+      { status: 404 },
     );
   }
 
@@ -116,16 +120,16 @@ export async function POST(req: NextRequest) {
     await realtimeClient.updateSession({
       instructions: `${agent.prompt}\n\n[Update Whiteboard]\n${whiteboardSummary}`,
     });
-  
+
     // Fix: Specify the channel creator when creating/watching the channel
     // const channel = streamChat.channel("messaging", meetingId, {
     //   created_by_id: agent.id, // Add this field
     //   name: `Meeting ${meetingId}`,
     //   members: [agent.id], // Optional: specify members
     // });
-    
+
     // await channel.watch();
-    
+
     // await channel.sendMessage({
     //   text: answer,
     //   user: { id: agent.id, name: agent.name },
