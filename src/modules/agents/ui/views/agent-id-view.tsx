@@ -44,15 +44,15 @@ export const AgentIdView = ({ agentId }: Props) => {
       },
 
       onError: (error) => {
-        toast.error(error.message || "Failed to remove agent");
-        console.error("Error removing agent:", error);
+        toast.error(error.message || "Failed to remove Tutor");
+        console.error("Error removing Tutor:", error);
       },
     }),
   );
 
   const [RemoveConfirmation, confirmRemove] = useConfirm(
     "Are you sure?",
-    `The following action will remove the agent ${data.name} permanently. This action cannot be undone.`,
+    `The following action will remove the Tutor ${data.name} permanently. This action cannot be undone.`,
   );
 
   const handleRemoveAgent = async () => {

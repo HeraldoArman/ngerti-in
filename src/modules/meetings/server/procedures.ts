@@ -351,31 +351,49 @@ export const meetingsRouter = createTRPCRouter({
       return transcriptWithSpeakers;
     }),
 
-  getHours: protectedProcedure.query(async ({ ctx }) => {
-    const meetingArr = await db
-      .select()
-      .from(meetings)
-      .where(eq(meetings.id, ctx.userId.user.id));
-
-    if (meetingArr.length === 0) {
-      return 0;
-    }
-
-    let totalHours = 0;
-
-    for (const { startedAt, endedAt } of meetingArr) {
-      if (!endedAt || !startedAt) {
-        totalHours += 0;
-        continue;
+    getHours: protectedProcedure.query(async ({ input, ctx }) => {
+      const meetingArr = await db
+        .select()
+        .from(meetings)
+        .where(eq(meetings.userId, ctx.userId.user.id)); // Fix: changed from meetings.id to meetings.userId
+    
+      if (meetingArr.length === 0) {
+        return "0.00";
       }
+    
+      let totalHours = 0;
+    
+      for (const { startedAt, endedAt } of meetingArr) {
+        if (!endedAt || !startedAt) {
+          totalHours += 0;
+          continue;
+        }
+    
+        const diffMs = endedAt.getTime() - startedAt.getTime();
+        const diffHours = diffMs / (1000 * 60 * 60);
+        totalHours += diffHours;
+      }
+    
+      return totalHours.toFixed(2);
+    }),
 
-      const diffMs = endedAt.getTime() - startedAt.getTime();
-      const diffHours = diffMs / (1000 * 60 * 60);
-      totalHours += diffHours;
-    }
+  getLatestMeeting : protectedProcedure.query(async ({ input, ctx }) => {
+    const [latestMeeting] = await db
+      .select({
+        ...getTableColumns(meetings),
+        agent: agents,
+        duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
+          "duration",
+        ),
+      })
+      .from(meetings)
+      .innerJoin(agents, eq(meetings.agentId, agents.id))
+      .where(eq(meetings.userId, ctx.userId.user.id))
+      .orderBy(desc(meetings.createdAt), desc(meetings.id))
+      .limit(1);
 
-    const totalFormatted = `${totalHours.toFixed(1)} h`;
 
-    return totalFormatted;
-  }),
+    return latestMeeting || null;
+
+  })
 });
