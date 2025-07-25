@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { format, formatDate } from "date-fns";
+import { format } from "date-fns";
 import { SearchIcon } from "lucide-react";
 import Highlighter from "react-highlight-words";
 import { useQuery } from "@tanstack/react-query";
@@ -9,8 +9,8 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { generatedAvatarUri } from "@/lib/avatar";
-import { trpc } from "@/trpc/server";
-import JSONL from "jsonl-parse-stringify"; // or your JSONL parser
+// import { trpc } from "@/trpc/server";
+// import JSONL from "jsonl-parse-stringify"; // or your JSONL parser
 // import {format} from "date-fns";
 
 interface TranscriptProps {
@@ -18,13 +18,13 @@ interface TranscriptProps {
 }
 
 export const Transcript = ({ meetingId }: TranscriptProps) => {
-  const TRPC = useTRPC();
+  const trpc = useTRPC();
   const { data } = useQuery(
     trpc.meetings.getTranscript.queryOptions({ id: meetingId })
   );
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = (data ?? []).filter((item: any) =>
+  const filteredData = (data ?? []).filter((item) =>
     item.text?.toString().toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (

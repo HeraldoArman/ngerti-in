@@ -17,7 +17,7 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 import { formatDuration } from "@/lib/utils";
 import { format } from "date-fns";
 import { Transcript } from "./transcript";
-
+import { ChatProvider } from "./chat-provider";
 
 
 interface CompletedStateProps {
@@ -71,6 +71,9 @@ export const CompletedState = ({ data }: CompletedStateProps) => {
                 controls
               ></video>
             </div>
+          </TabsContent>
+          <TabsContent value="chat">
+          <ChatProvider meetingId={data.id} meetingName={data.name}/>
           </TabsContent>
           <TabsContent value="transcript">
           <Transcript meetingId={data.id}/>

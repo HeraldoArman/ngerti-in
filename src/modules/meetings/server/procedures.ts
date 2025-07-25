@@ -37,6 +37,7 @@ import { streamChat } from "@/lib/stream-chat";
 export const meetingsRouter = createTRPCRouter({
   generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
     const token = streamChat.createToken(ctx.userId.user.id);
+    console.log(token)
     await streamChat.upsertUser(
       {
         id: ctx.userId.user.id,
@@ -264,7 +265,7 @@ export const meetingsRouter = createTRPCRouter({
   getTranscript: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
-      const [meeting] = await db
+      const [existingMeeting] = await db
         .select()
         .from(meetings)
         .where(
@@ -274,30 +275,28 @@ export const meetingsRouter = createTRPCRouter({
           )
         );
 
-      if (!meeting || !meeting.transcriptUrl) {
+      if (!existingMeeting) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Meeting not found",
         });
       }
 
+      if (!existingMeeting.transcriptUrl){
+        return []
+      }
+
       // If you store the transcript as a URL and want to fetch its content:
 
-      const transcript = await fetch(meeting.transcriptUrl)
+      const transcript = await fetch(existingMeeting.transcriptUrl)
         .then((res) => res.text())
         .then(
-          (text: string) =>
-            JSONL.parse<StreamTranscriptItem>(text) as StreamTranscriptItem[]
+          (text) =>
+            JSONL.parse<StreamTranscriptItem>(text)
         )
-        .catch(() => []);
+        .catch(() => {return []});
 
-      // Pastikan transcript adalah array
-      if (!Array.isArray(transcript)) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Transcript is not an array",
-        });
-      }
+
 
       const speakerIds = [
         ...new Set(transcript.map((item) => item.speaker_id)),
@@ -315,26 +314,43 @@ export const meetingsRouter = createTRPCRouter({
               generatedAvatarUri({ seed: user.name, variant: "initials" }),
           }))
         );
+        const agentSpeaker = await db.select().from(agents).where(inArray(agents.id, speakerIds)).then((agents)=> agents.map((agent)=> ({
+          ...agent,
+          image:
+    
+            generatedAvatarUri({
+              seed: agent.name,
+              variant: "botttsNeutral",
+            }),
+        })))
 
+
+        const speakers = [...userSpeakers, ...agentSpeaker]
       const transcriptWithSpeakers = transcript.map((item) => {
-        const speaker = userSpeakers.find(
-          (user) => user.id === item.speaker_id
-        );
+        const speaker = speakers.find(
+          (speaker) => speaker.id === item.speaker_id
+        )
+        if (!speaker){
+          return {
+            ...item,
+            user : {
+              name: "Unknown",
+              image: generatedAvatarUri({
+                seed: "Unknown",
+                variant: "initials",
+              })
+            }
+          }
+        }
         return {
-          ...item,
-          speaker: speaker
-            ? {
-                id: speaker.id,
-                name: speaker.name,
-                image: speaker.image,
-              }
-            : null,
-        };
-      });
-      return transcriptWithSpeakers;
-      // throw new TRPCError({
-      //   code: "NOT_FOUND",
-      //   message: "Transcript not found",
-      // });
+          ...item, user : {
+            name: speaker.name,
+            image: speaker.image,
+          }
+        }
+      })
+      return transcriptWithSpeakers
+
+
     }),
 });
