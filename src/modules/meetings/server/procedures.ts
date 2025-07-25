@@ -351,33 +351,33 @@ export const meetingsRouter = createTRPCRouter({
       return transcriptWithSpeakers;
     }),
 
-    getHours: protectedProcedure.query(async ({ input, ctx }) => {
-      const meetingArr = await db
-        .select()
-        .from(meetings)
-        .where(eq(meetings.userId, ctx.userId.user.id)); // Fix: changed from meetings.id to meetings.userId
-    
-      if (meetingArr.length === 0) {
-        return "0.00";
-      }
-    
-      let totalHours = 0;
-    
-      for (const { startedAt, endedAt } of meetingArr) {
-        if (!endedAt || !startedAt) {
-          totalHours += 0;
-          continue;
-        }
-    
-        const diffMs = endedAt.getTime() - startedAt.getTime();
-        const diffHours = diffMs / (1000 * 60 * 60);
-        totalHours += diffHours;
-      }
-    
-      return totalHours.toFixed(2);
-    }),
+  getHours: protectedProcedure.query(async ({ input, ctx }) => {
+    const meetingArr = await db
+      .select()
+      .from(meetings)
+      .where(eq(meetings.userId, ctx.userId.user.id)); // Fix: changed from meetings.id to meetings.userId
 
-  getLatestMeeting : protectedProcedure.query(async ({ input, ctx }) => {
+    if (meetingArr.length === 0) {
+      return "0.00";
+    }
+
+    let totalHours = 0;
+
+    for (const { startedAt, endedAt } of meetingArr) {
+      if (!endedAt || !startedAt) {
+        totalHours += 0;
+        continue;
+      }
+
+      const diffMs = endedAt.getTime() - startedAt.getTime();
+      const diffHours = diffMs / (1000 * 60 * 60);
+      totalHours += diffHours;
+    }
+
+    return totalHours.toFixed(2);
+  }),
+
+  getLatestMeeting: protectedProcedure.query(async ({ input, ctx }) => {
     const [latestMeeting] = await db
       .select({
         ...getTableColumns(meetings),
@@ -392,8 +392,6 @@ export const meetingsRouter = createTRPCRouter({
       .orderBy(desc(meetings.createdAt), desc(meetings.id))
       .limit(1);
 
-
     return latestMeeting || null;
-
-  })
+  }),
 });

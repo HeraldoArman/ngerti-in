@@ -18,7 +18,7 @@ export default function QuickAccess() {
   const [isDialogeOpen, setisDialogeOpen] = useState(false);
   const trpc = useTRPC();
   const { data: latestMeeting } = useSuspenseQuery(
-    trpc.meetings.getLatestMeeting.queryOptions()
+    trpc.meetings.getLatestMeeting.queryOptions(),
   );
 
   const quickAccessItems = [
@@ -68,10 +68,7 @@ export default function QuickAccess() {
 
   return (
     <>
-      <NewMeetingDialog
-        open={isDialogeOpen}
-        onOpenChange={setisDialogeOpen}
-      />
+      <NewMeetingDialog open={isDialogeOpen} onOpenChange={setisDialogeOpen} />
       <Card className="border-0 shadow-sm bg-white/60 backdrop-blur-sm">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
@@ -98,11 +95,10 @@ export default function QuickAccess() {
                   onClick={item.onClick}
                   desc={item.description}
                 />
-
               </div>
             ))}
           </div>
-          
+
           {/* Bottom gradient decoration */}
           {/* <div className="mt-8 h-1 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-green-500/20 rounded-full" /> */}
         </CardContent>
