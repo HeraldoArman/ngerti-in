@@ -13,8 +13,9 @@ const Hero = () => {
       </div>
 
       <div className="text-center">
-        <h1 className="text-2xl md:text-4xl md:leading-tight font-bold text-foreground max-w-lg md:max-w-2xl mx-auto">
-          Your Personal AI Study Tutor
+        <h1 className="text-2xl md:text-6xl md:leading-tight font-bold text-foreground max-w-xl w-full md:max-w-xl mx-auto">
+          Your Personal AI &nbsp;
+          <span className="text-accent-foreground">Study Tutor</span>
         </h1>
         <p className="mt-4 text-foreground max-w-xl mx-auto">
           Learning platform designed to help students learn through interactive

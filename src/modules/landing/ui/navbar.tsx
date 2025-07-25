@@ -13,7 +13,7 @@ export default function Navbar() {
 
   if (isMobile) {
     return (
-      <div className="w-full bg-white border-b border border-border top-0 fixed z-10">
+      <div className="w-full bg-white/60 backdrop-blur-2xl border-b border border-border top-0 fixed z-10">
         <div className="flex items-center justify-between h-16 px-4">
           <Link href="/" className="font-bold flex gap-2 items-center">
             <Image alt="logo" width={16} height={16} src="/logo.svg" />
@@ -52,7 +52,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="w-full bg-white border-b border-1 border-border top-0 fixed z-10">
+    <div className="w-full bg-white/60 backdrop-blur-2xl border-b border-1 border-border top-0 fixed z-10">
       <div className="mx-auto flex max-w-4xl justify-between h-16 items-center">
         <Link href={"/"} className="font-bold">
           <div className="gap-2 flex">
@@ -63,7 +63,6 @@ export default function Navbar() {
         <div className="flex gap-4 text-md">
           <Link href="#features">Features</Link>
           <Link href="#about">About</Link>
-          <Link href="#contact">Contact</Link>
         </div>
         <Link href={"/sign-in"}>
           <Button variant="secondary" className="cursor-pointer">
