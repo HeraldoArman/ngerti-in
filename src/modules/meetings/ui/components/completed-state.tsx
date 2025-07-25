@@ -19,7 +19,6 @@ import { format } from "date-fns";
 import { Transcript } from "./transcript";
 import { ChatProvider } from "./chat-provider";
 
-
 interface CompletedStateProps {
   data: MeetingGetOne;
 }
@@ -73,10 +72,10 @@ export const CompletedState = ({ data }: CompletedStateProps) => {
             </div>
           </TabsContent>
           <TabsContent value="chat">
-          <ChatProvider meetingId={data.id} meetingName={data.name}/>
+            <ChatProvider meetingId={data.id} meetingName={data.name} />
           </TabsContent>
           <TabsContent value="transcript">
-          <Transcript meetingId={data.id}/>
+            <Transcript meetingId={data.id} />
           </TabsContent>
           <TabsContent value="summary">
             <div className="bg-white rounded-lg border">

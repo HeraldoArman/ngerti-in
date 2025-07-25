@@ -33,7 +33,7 @@ export const ChatUI = ({
 }: ChatUIProps) => {
   const trpc = useTRPC();
   const { mutateAsync: generateChatToken } = useMutation(
-    trpc.meetings.generateChatToken.mutationOptions()
+    trpc.meetings.generateChatToken.mutationOptions(),
   );
   const [channel, setChannel] = useState<StreamChannel>();
   const client = useCreateChatClient({
@@ -46,37 +46,36 @@ export const ChatUI = ({
     },
   });
 
-
-  useEffect(()=>{
+  useEffect(() => {
     if (!client) return;
     const channel = client.channel("messaging", meetingId, {
-        // name: meetingName,
-        members: [userId],
-    })
+      // name: meetingName,
+      members: [userId],
+    });
     setChannel(channel);
   }, [client, meetingId, userId, meetingName]);
 
-
-  if (!client ){
-    return <LoadingState
-    title="Loading Chat"
-    description="Please wait while we load the chat."
-    />
+  if (!client) {
+    return (
+      <LoadingState
+        title="Loading Chat"
+        description="Please wait while we load the chat."
+      />
+    );
   }
 
   return (
     <div className="bg-white rounded-lg border overflow-hidden">
-        <Chat client={client}>
-
-            <Channel channel={channel}>
-                <Window>
-                    <div className="flex-1 overflow-y-auto max-h-[calc(100vh-23rem)] border-b">
-                        <MessageList/>
-                    </div>
-                    <MessageInput/>
-                </Window>
-            </Channel>
-        </Chat>
+      <Chat client={client}>
+        <Channel channel={channel}>
+          <Window>
+            <div className="flex-1 overflow-y-auto max-h-[calc(100vh-23rem)] border-b">
+              <MessageList />
+            </div>
+            <MessageInput />
+          </Window>
+        </Channel>
+      </Chat>
     </div>
   );
 };

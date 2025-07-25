@@ -37,14 +37,12 @@ import { streamChat } from "@/lib/stream-chat";
 export const meetingsRouter = createTRPCRouter({
   generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
     const token = streamChat.createToken(ctx.userId.user.id);
-    console.log(token)
-    await streamChat.upsertUser(
-      {
-        id: ctx.userId.user.id,
-        role: "admin",
-      },
-    );
-    return token
+    console.log(token);
+    await streamChat.upsertUser({
+      id: ctx.userId.user.id,
+      role: "admin",
+    });
+    return token;
   }),
   generateToken: protectedProcedure.mutation(async ({ ctx }) => {
     await streamVideo.upsertUsers([
@@ -75,7 +73,7 @@ export const meetingsRouter = createTRPCRouter({
       const [removedMeeing] = await db
         .delete(meetings)
         .where(
-          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id))
+          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id)),
         )
         .returning();
 
@@ -97,7 +95,7 @@ export const meetingsRouter = createTRPCRouter({
         .update(meetings)
         .set(updateData)
         .where(
-          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id))
+          and(eq(meetings.id, id), eq(meetings.userId, ctx.userId.user.id)),
         )
         .returning();
 
@@ -179,7 +177,7 @@ export const meetingsRouter = createTRPCRouter({
           ...getTableColumns(meetings),
           agent: agents,
           duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
-            "duration"
+            "duration",
           ),
         })
         .from(meetings)
@@ -187,8 +185,8 @@ export const meetingsRouter = createTRPCRouter({
         .where(
           and(
             eq(meetings.id, input.id),
-            eq(meetings.userId, ctx.userId.user.id)
-          )
+            eq(meetings.userId, ctx.userId.user.id),
+          ),
         );
 
       if (!existingMeeting) {
@@ -218,7 +216,7 @@ export const meetingsRouter = createTRPCRouter({
             MeetingStatus.Cancelled,
           ])
           .nullish(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const { search, page, pageSize, status, agentId } = input;
@@ -228,7 +226,7 @@ export const meetingsRouter = createTRPCRouter({
           ...getTableColumns(meetings),
           agent: agents,
           duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
-            "duration"
+            "duration",
           ),
         })
         .from(meetings)
@@ -238,8 +236,8 @@ export const meetingsRouter = createTRPCRouter({
             eq(meetings.userId, ctx.userId.user.id),
             search ? ilike(meetings.name, `%${search}%`) : undefined,
             status ? eq(meetings.status, status) : undefined,
-            agentId ? eq(meetings.agentId, agentId) : undefined
-          )
+            agentId ? eq(meetings.agentId, agentId) : undefined,
+          ),
         )
         .orderBy(desc(meetings.createdAt), desc(meetings.id))
         .limit(pageSize)
@@ -251,8 +249,8 @@ export const meetingsRouter = createTRPCRouter({
         .where(
           and(
             eq(meetings.userId, ctx.userId.user.id),
-            search ? ilike(meetings.name, `%${search}%`) : undefined
-          )
+            search ? ilike(meetings.name, `%${search}%`) : undefined,
+          ),
         );
 
       const totalPages = Math.ceil(total.count / pageSize);
@@ -271,8 +269,8 @@ export const meetingsRouter = createTRPCRouter({
         .where(
           and(
             eq(meetings.id, input.id),
-            eq(meetings.userId, ctx.userId.user.id)
-          )
+            eq(meetings.userId, ctx.userId.user.id),
+          ),
         );
 
       if (!existingMeeting) {
@@ -282,21 +280,18 @@ export const meetingsRouter = createTRPCRouter({
         });
       }
 
-      if (!existingMeeting.transcriptUrl){
-        return []
+      if (!existingMeeting.transcriptUrl) {
+        return [];
       }
 
       // If you store the transcript as a URL and want to fetch its content:
 
       const transcript = await fetch(existingMeeting.transcriptUrl)
         .then((res) => res.text())
-        .then(
-          (text) =>
-            JSONL.parse<StreamTranscriptItem>(text)
-        )
-        .catch(() => {return []});
-
-
+        .then((text) => JSONL.parse<StreamTranscriptItem>(text))
+        .catch(() => {
+          return [];
+        });
 
       const speakerIds = [
         ...new Set(transcript.map((item) => item.speaker_id)),
@@ -312,45 +307,75 @@ export const meetingsRouter = createTRPCRouter({
             image:
               user.image ??
               generatedAvatarUri({ seed: user.name, variant: "initials" }),
-          }))
+          })),
         );
-        const agentSpeaker = await db.select().from(agents).where(inArray(agents.id, speakerIds)).then((agents)=> agents.map((agent)=> ({
-          ...agent,
-          image:
-    
-            generatedAvatarUri({
+      const agentSpeaker = await db
+        .select()
+        .from(agents)
+        .where(inArray(agents.id, speakerIds))
+        .then((agents) =>
+          agents.map((agent) => ({
+            ...agent,
+            image: generatedAvatarUri({
               seed: agent.name,
               variant: "botttsNeutral",
             }),
-        })))
+          })),
+        );
 
-
-        const speakers = [...userSpeakers, ...agentSpeaker]
+      const speakers = [...userSpeakers, ...agentSpeaker];
       const transcriptWithSpeakers = transcript.map((item) => {
         const speaker = speakers.find(
-          (speaker) => speaker.id === item.speaker_id
-        )
-        if (!speaker){
+          (speaker) => speaker.id === item.speaker_id,
+        );
+        if (!speaker) {
           return {
             ...item,
-            user : {
+            user: {
               name: "Unknown",
               image: generatedAvatarUri({
                 seed: "Unknown",
                 variant: "initials",
-              })
-            }
-          }
+              }),
+            },
+          };
         }
         return {
-          ...item, user : {
+          ...item,
+          user: {
             name: speaker.name,
             image: speaker.image,
-          }
-        }
-      })
-      return transcriptWithSpeakers
-
-
+          },
+        };
+      });
+      return transcriptWithSpeakers;
     }),
+
+  getHours: protectedProcedure.query(async ({ ctx }) => {
+    const meetingArr = await db
+      .select()
+      .from(meetings)
+      .where(eq(meetings.id, ctx.userId.user.id));
+
+    if (meetingArr.length === 0) {
+      return 0;
+    }
+
+    let totalHours = 0;
+
+    for (const { startedAt, endedAt } of meetingArr) {
+      if (!endedAt || !startedAt) {
+        totalHours += 0;
+        continue;
+      }
+
+      const diffMs = endedAt.getTime() - startedAt.getTime();
+      const diffHours = diffMs / (1000 * 60 * 60);
+      totalHours += diffHours;
+    }
+
+    const totalFormatted = `${totalHours.toFixed(1)} h`;
+
+    return totalFormatted;
+  }),
 });
