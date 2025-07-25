@@ -110,16 +110,51 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const call = streamVideo.video.call("default", meetingId);
-    const realtimeClient = await streamVideo.video.connectOpenAi({
-      call,
-      openAiApiKey: process.env.OPENAI_API_KEY!,
-      agentUserId: existingAgent.id,
-    });
 
-    realtimeClient.updateSession({
-      instructions: existingAgent.prompt,
-    });
+  // ✅ Send polling event only once
+  await inngest.send({
+    name: "agent/prompt.poll",
+    data: {
+      agentId: existingAgent.id,
+      meetingId: existingMeeting.id,
+    },
+  });
+  console.log("🚀 Started agent prompt polling");
+    // const call = streamVideo.video.call("default", meetingId);
+    // const realtimeClient = await streamVideo.video.connectOpenAi({
+    //   call,
+    //   openAiApiKey: process.env.OPENAI_API_KEY!,
+    //   agentUserId: existingAgent.id,
+    // });
+
+    // const [newAgentPrompt] = await db
+    // .select()
+    // .from(agents)
+    // .where(eq(agents.id, existingMeeting.agentId));
+
+    // realtimeClient.updateSession({
+    //   instructions: newAgentPrompt.prompt,
+    // });
+
+
+    // const pollInterval = setInterval(async () => {
+    //   try {
+    //     const [updatedAgent] = await db
+    //       .select()
+    //       .from(agents)
+    //       .where(eq(agents.id, existingMeeting.agentId));
+    
+    //     if (updatedAgent) {
+    //       realtimeClient.updateSession({
+    //         instructions: updatedAgent.prompt,
+    //       });
+    //       console.log("🔄 Agent prompt updated from database");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error updating agent prompt:", error);
+    //   }
+    // }, 1000); // Every 1 second
+    
     // console.log("existingMeeting", existingMeeting);
     // console.log("existingAgent", existingAgent);
     // console.log("agent name", existingAgent.name);
