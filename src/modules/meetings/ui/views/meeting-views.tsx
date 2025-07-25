@@ -24,6 +24,7 @@ export const MeetingsView = () => {
   return (
     <div className="max-h-126 h-full pb-4 px-4 md:px-8 flex flex-col gap-y-4">
       <DataTable
+        type="meeting"
         data={data.items}
         columns={columns}
         onRowClick={(row) => router.push(`/dashboard/meetings/${row.id}`)}
@@ -33,12 +34,6 @@ export const MeetingsView = () => {
         totalPages={data.totalPages}
         onPageChange={(page) => setFilters({ page })}
       />
-      {data.items.length === 0 && (
-        <EmptyState
-          title="Create your first meeting"
-          description="Create a meeting to start interacting with your agents. Each meeting can have multiple participants and agents that follow your instructions."
-        />
-      )}
     </div>
   );
 };

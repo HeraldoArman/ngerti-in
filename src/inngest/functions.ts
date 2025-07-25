@@ -13,29 +13,23 @@ const summarizer = createAgent({
 
 Your summary should be clear, student-friendly, and easy to read. Avoid jargon or overly technical language unless it was discussed explicitly in the transcript. Keep the tone supportive and informative.
 
-Use the following markdown structure for your output:
+Use the following markdown structure for every output:
 
-Overview
-Give a detailed yet concise narrative summary of the tutoring session. Focus on what the student was trying to learn, how the AI Agent responded, and what concepts were clarified or practiced. Include the main topic(s), key explanations or problem-solving steps, and any useful outcomes or progress made by the student. Avoid listing—write in smooth, full sentences.
+### Overview
+Provide a detailed, engaging summary of the session's content. Focus on major features, user workflows, and any key takeaways. Write in a narrative style, using full sentences. Highlight unique or powerful aspects of the product, platform, or discussion.
 
-Notes
-Break the session into logical sections, grouped by topic or progression of the lesson. Use timestamp ranges to anchor each section. Each section should include key ideas, teaching moments, examples, or student questions in bullet points.
+### Notes
+Break down key content into thematic sections with timestamp ranges. Each section should summarize key points, actions, or demos in bullet format.
 
 Example:
+#### Section Name
+- Main point or demo shown here
+- Another key insight or interaction
+- Follow-up tool or explanation provided
 
-[00:03-00:12] Introduction to Linear Equations
-Student asked how to solve equations with variables on both sides
-
-AI explained step-by-step balancing method
-
-Provided two worked examples
-
-[00:13-00:22] Practice and Feedback
-Student tried solving 2 new equations
-
-AI gave corrective feedback on sign errors
-
-Emphasized importance of checking answers
+#### Next Section
+- Feature X automatically does Y
+- Mention of integration with Z
 
 
 `.trim(),
@@ -46,12 +40,12 @@ export const meetingsProcessing = inngest.createFunction(
   { id: "meetings/processing" },
   { event: "meetings/processing" },
   async ({ event, step }) => {
-
     const transcriptUrl = event.data.transcript_url;
     if (!transcriptUrl) {
       throw new Error("Missing transcript_url in event data");
     }
-    
+    console.log(transcriptUrl);
+
     const response = await step.run("fetch-transcript", async () => {
       return fetch(transcriptUrl).then((res) => res.text());
     });
@@ -81,15 +75,12 @@ export const meetingsProcessing = inngest.createFunction(
         const speaker = speakers.find(
           (speaker) => speaker.id === item.speaker_id,
         );
-
-        if (!speaker) {
-          return {
-            ...item,
-            user: {
-              name: "Unknown",
-            },
-          };
-        }
+        return {
+          ...item,
+          user: {
+            name: speaker ? speaker.name : "Unknown",
+          },
+        };
       });
     });
 

@@ -22,6 +22,7 @@ export const AgentsView = () => {
   return (
     <div className="max-h-126 h-full pb-4 px-4 md:px-8 flex flex-col gap-y-4">
       <DataTable
+        type="tutor"
         data={data.items}
         columns={columns}
         onRowClick={(row) => router.push(`/dashboard/tutor/${row.id}`)}
@@ -32,12 +33,6 @@ export const AgentsView = () => {
         totalPages={data.totalPages}
         onPageChange={(page) => setFilters({ page })}
       />
-      {data.items.length === 0 && (
-        <EmptyState
-          title="Create your first Tutor"
-          description="Create an Tutor to join your meetings. Each Tutor will follow your instructions and can interact with participant with the call"
-        />
-      )}
     </div>
   );
 };

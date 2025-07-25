@@ -8,7 +8,16 @@ import { meetings, agents } from "@/db/schema";
 // import
 //   import { agentsInsertSchema } from "../schemas";
 import { z } from "zod";
-import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
+import {
+  and,
+  count,
+  desc,
+  eq,
+  getTableColumns,
+  ilike,
+  inArray,
+  sql,
+} from "drizzle-orm";
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
@@ -17,12 +26,24 @@ import {
 } from "@/constant";
 import { TRPCError } from "@trpc/server";
 import { meetingsInsertSchema, meetingsUpdateSchema } from "../schema";
-import { MeetingStatus } from "../types";
+import { MeetingStatus, StreamTranscriptItem } from "../types";
 import { streamVideo } from "@/lib/stream-video";
 import { generatedAvatarUri } from "@/lib/avatar";
 import { languages } from "humanize-duration";
+import JSONL from "jsonl-parse-stringify";
+import { user } from "@/db/schema";
+import { streamChat } from "@/lib/stream-chat";
 
 export const meetingsRouter = createTRPCRouter({
+  generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
+    const token = streamChat.createToken(ctx.userId.user.id);
+    console.log(token);
+    await streamChat.upsertUser({
+      id: ctx.userId.user.id,
+      role: "admin",
+    });
+    return token;
+  }),
   generateToken: protectedProcedure.mutation(async ({ ctx }) => {
     await streamVideo.upsertUsers([
       {
@@ -236,4 +257,143 @@ export const meetingsRouter = createTRPCRouter({
 
       return { items: data, total: total.count, totalPages };
     }),
+
+  // Add this inside meetingsRouter
+
+  getTranscript: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const [existingMeeting] = await db
+        .select()
+        .from(meetings)
+        .where(
+          and(
+            eq(meetings.id, input.id),
+            eq(meetings.userId, ctx.userId.user.id),
+          ),
+        );
+
+      if (!existingMeeting) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Meeting not found",
+        });
+      }
+
+      if (!existingMeeting.transcriptUrl) {
+        return [];
+      }
+
+      // If you store the transcript as a URL and want to fetch its content:
+
+      const transcript = await fetch(existingMeeting.transcriptUrl)
+        .then((res) => res.text())
+        .then((text) => JSONL.parse<StreamTranscriptItem>(text))
+        .catch(() => {
+          return [];
+        });
+
+      const speakerIds = [
+        ...new Set(transcript.map((item) => item.speaker_id)),
+      ];
+
+      const userSpeakers = await db
+        .select()
+        .from(user)
+        .where(inArray(user.id, speakerIds))
+        .then((users) =>
+          users.map((user) => ({
+            ...user,
+            image:
+              user.image ??
+              generatedAvatarUri({ seed: user.name, variant: "initials" }),
+          })),
+        );
+      const agentSpeaker = await db
+        .select()
+        .from(agents)
+        .where(inArray(agents.id, speakerIds))
+        .then((agents) =>
+          agents.map((agent) => ({
+            ...agent,
+            image: generatedAvatarUri({
+              seed: agent.name,
+              variant: "botttsNeutral",
+            }),
+          })),
+        );
+
+      const speakers = [...userSpeakers, ...agentSpeaker];
+      const transcriptWithSpeakers = transcript.map((item) => {
+        const speaker = speakers.find(
+          (speaker) => speaker.id === item.speaker_id,
+        );
+        if (!speaker) {
+          return {
+            ...item,
+            user: {
+              name: "Unknown",
+              image: generatedAvatarUri({
+                seed: "Unknown",
+                variant: "initials",
+              }),
+            },
+          };
+        }
+        return {
+          ...item,
+          user: {
+            name: speaker.name,
+            image: speaker.image,
+          },
+        };
+      });
+      return transcriptWithSpeakers;
+    }),
+
+    getHours: protectedProcedure.query(async ({ input, ctx }) => {
+      const meetingArr = await db
+        .select()
+        .from(meetings)
+        .where(eq(meetings.userId, ctx.userId.user.id)); // Fix: changed from meetings.id to meetings.userId
+    
+      if (meetingArr.length === 0) {
+        return "0.00";
+      }
+    
+      let totalHours = 0;
+    
+      for (const { startedAt, endedAt } of meetingArr) {
+        if (!endedAt || !startedAt) {
+          totalHours += 0;
+          continue;
+        }
+    
+        const diffMs = endedAt.getTime() - startedAt.getTime();
+        const diffHours = diffMs / (1000 * 60 * 60);
+        totalHours += diffHours;
+      }
+    
+      return totalHours.toFixed(2);
+    }),
+
+  getLatestMeeting : protectedProcedure.query(async ({ input, ctx }) => {
+    const [latestMeeting] = await db
+      .select({
+        ...getTableColumns(meetings),
+        agent: agents,
+        duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as(
+          "duration",
+        ),
+      })
+      .from(meetings)
+      .innerJoin(agents, eq(meetings.agentId, agents.id))
+      .where(eq(meetings.userId, ctx.userId.user.id))
+      .orderBy(desc(meetings.createdAt), desc(meetings.id))
+      .limit(1);
+
+
+    return latestMeeting || null;
+
+  })
 });
