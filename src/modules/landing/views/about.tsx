@@ -33,7 +33,7 @@ export default function About() {
                   <div className="rounded-[50%] size-32 overflow-hidden">
                     <img
                       className="size-full object-cover"
-                      src="/placeholder.avif"
+                      src={member.image}
                       alt={member.name}
                     />
                   </div>
