@@ -26,7 +26,7 @@ const Hero = () => {
           </Link>
         </div>
         <Image
-          src={"./macbookpro.png"}
+          src={"./laptopmockup.png"}
           width={384}
           height={340}
           quality={100}
