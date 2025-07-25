@@ -62,26 +62,26 @@ To get a local copy up and running, follow these simple steps.
     ```
 2.  Install NPM packages
     ```sh
-    npm install
+    npm install --legacy-peer-deps
     ```
 3.  Set up your environment variables by creating a `.env` file and adding the necessary credentials for your database, authentication, and other services.
 
-```sh
-DATABASE_URL=""
-BETTER_AUTH_SECRET=""
-BETTER_AUTH_URL=""
-
-GOOGLE_CLIENT_ID=""
-GOOGLE_CLIENT_SECRET=""
-
-NEXT_PUBLIC_APP_URL=""
-NEXT_PUBLIC_STREAM_VIDEO_API_KEY=""
-STREAM_VIDEO_SECRET=""
-OPENAI_API_KEY=""
-
-NEXT_PUBLIC_STREAM_CHAT_API_KEY=""
-STREAM_CHAT_SECRET_KEY=""
-```
+   ```sh
+   DATABASE_URL=""
+   BETTER_AUTH_SECRET=""
+   BETTER_AUTH_URL=""
+   
+   GOOGLE_CLIENT_ID=""
+   GOOGLE_CLIENT_SECRET=""
+   
+   NEXT_PUBLIC_APP_URL=""
+   NEXT_PUBLIC_STREAM_VIDEO_API_KEY=""
+   STREAM_VIDEO_SECRET=""
+   OPENAI_API_KEY=""
+   
+   NEXT_PUBLIC_STREAM_CHAT_API_KEY=""
+   STREAM_CHAT_SECRET_KEY=""
+   ```
 4.  Run the development server
     ```sh
     npm run dev
