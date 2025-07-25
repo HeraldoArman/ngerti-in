@@ -17,7 +17,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 px-4">
           <Link href="/" className="font-bold flex gap-2 items-center">
             <Image alt="logo" width={16} height={16} src="/logo.svg" />
-            Ngerti.in
+            Ngerti.In
           </Link>
 
           <button
@@ -57,7 +57,7 @@ export default function Navbar() {
         <Link href={"/"} className="font-bold">
           <div className="gap-2 flex">
             <Image alt="logo" width={16} height={16} src={"/logo.svg"} />
-            Ngerti.in
+            Ngerti.In
           </div>
         </Link>
         <div className="flex gap-4 text-md">

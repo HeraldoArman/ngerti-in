@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -15,14 +16,14 @@ const Hero = () => {
         <h1 className="text-2xl md:text-4xl md:leading-tight font-bold text-foreground max-w-lg md:max-w-2xl mx-auto">
           Your Personal AI Study Tutor
         </h1>
-        <p className="mt-4 text-foreground max-w-lg mx-auto">
+        <p className="mt-4 text-foreground max-w-xl mx-auto">
           Learning platform designed to help students learn through interactive
           whiteboard explainations and real-time voice integrations.
         </p>
         <div className="mt-6 flex flex-col sm:flex-row items-center sm:gap-4 w-fit mx-auto">
-          <Button variant={"secondary"} className="cursor-pointer">
-            Get Started!
-          </Button>
+          <Link href={"/sign-in"}>
+            <Button className="cursor-pointer">Get Started!</Button>
+          </Link>
         </div>
         <Image
           src={"./macbookpro.png"}
