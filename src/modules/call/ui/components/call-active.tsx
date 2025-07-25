@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { SpeakerLayout, useCallStateHooks, useCall } from "@stream-io/video-react-sdk";
 import { Mic, MicOff, PhoneOff, Monitor, MonitorOff, Palette } from "lucide-react";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface CallActiveProps {
   meetingName: string;

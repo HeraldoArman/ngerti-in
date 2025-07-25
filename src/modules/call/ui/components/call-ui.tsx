@@ -30,9 +30,12 @@ export const CallUI = ({ meetingName }: { meetingName: string }) => {
   const callingState = useCallCallingState();
   const [show, setShow] = useState<"lobby" | "call" | "ended">("lobby");
   const [isWhiteboardOpen, setWhiteboardOpen] = useState(false);
-  
+
   // State to persist Excalidraw data
-  const [excalidrawData, setExcalidrawData] = useState({
+  const [excalidrawData, setExcalidrawData] = useState<{
+    elements: any[];
+    appState: { viewBackgroundColor: string; [key: string]: any };
+  }>({
     elements: [],
     appState: {
       viewBackgroundColor: "#ffffff",
@@ -55,19 +58,16 @@ export const CallUI = ({ meetingName }: { meetingName: string }) => {
 
   // Function to update Excalidraw data with useCallback to prevent re-renders
   const handleExcalidrawChange = useCallback((elements: any, appState: any) => {
-    // Only update if there are actual changes
-    setExcalidrawData(prevData => {
-      const hasChanges = 
-        JSON.stringify(prevData.elements) !== JSON.stringify(elements) ||
+    setExcalidrawData((prevData) => {
+      const safeElements = Array.isArray(elements) ? elements : [];
+      const hasChanges =
+        JSON.stringify(prevData.elements) !== JSON.stringify(safeElements) ||
         JSON.stringify(prevData.appState) !== JSON.stringify(appState);
-      
-      if (!hasChanges) {
-        return prevData;
-      }
-      
+
+      if (!hasChanges) return prevData;
       return {
-        elements,
-        appState,
+        elements: safeElements,
+        appState: appState || { viewBackgroundColor: "#ffffff" },
       };
     });
   }, []);
@@ -85,7 +85,7 @@ export const CallUI = ({ meetingName }: { meetingName: string }) => {
           <CallLobby onJoin={handleJoin} />
         </div>
       )}
-      
+
       {show === "call" && (
         <div className="relative h-full w-full overflow-hidden">
           {/* Call Active Component - Full Screen */}
@@ -101,12 +101,20 @@ export const CallUI = ({ meetingName }: { meetingName: string }) => {
           {isWhiteboardOpen && (
             <div className="absolute inset-0 z-40 h-full w-full bg-white overflow-hidden">
               <div className="h-full w-full">
-                <ExcalidrawWrapper 
-                  initialData={excalidrawData}
+                <ExcalidrawWrapper
+                  initialData={{
+                    elements: Array.isArray(excalidrawData.elements)
+                      ? excalidrawData.elements
+                      : [],
+                    appState: excalidrawData.appState || {
+                      viewBackgroundColor: "#ffffff",
+                    },
+                  }}
+                  // ...other props
                   onChange={handleExcalidrawChange}
+                  meetingId={call?.id || ""}
                 />
               </div>
-              
               {/* Close Button */}
               <button
                 onClick={() => setWhiteboardOpen(false)}
@@ -119,7 +127,7 @@ export const CallUI = ({ meetingName }: { meetingName: string }) => {
           )}
         </div>
       )}
-      
+
       {show === "ended" && (
         <div className="h-full w-full">
           <CallEnded />
