@@ -145,6 +145,10 @@ Here’s a sneak peek into the Ngerti.In platform. Click on the categories below
 <strong>Meeting Whiteboard</strong><br/><br/>
 <img src="https://github.com/user-attachments/assets/027a4046-881f-490a-acff-929fb165ee01" alt="Meeting Whiteboard" width="100%">
 </td>
+ </td>
+<td align="center">
+
+</td>
 </tr>
 </table>
 </details>
@@ -171,10 +175,7 @@ Here’s a sneak peek into the Ngerti.In platform. Click on the categories below
  <td align="center">
 <strong>Meeting Chat</strong><br/><br/>
 <img src="https://github.com/user-attachments/assets/b08277ae-fdae-40ce-8bec-0a8f5547dd60" alt="Meeting Chat" width="100%">
-</td>
-<td align="center">
 
-</td>
 </tr>
 </table>
 </details>
