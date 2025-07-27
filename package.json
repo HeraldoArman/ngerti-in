@@ -9,7 +9,6 @@
     "lint": "next lint",
     "format": "prettier src/**/*.{ts,tsx} --write",
     "db:push": "drizzle-kit push",
-    "dev:webhook": "ngrok http --url=presently-enabling-cod.ngrok-free.app 3000",
     "dev:inngest": "npx inngest-cli@latest dev"
   },
   "dependencies": {
