@@ -1,4 +1,8 @@
-# Ngerti.in - Your Personal AI Study Tutor 🤖
+<picture>
+<img width="1920" alt="Ngerti ln (2)" src="https://github.com/user-attachments/assets/10956cdd-4f57-4c45-bf65-913430fccb46" />
+</picture>
+<h1 align="center">Ngerti.in - Your Personal AI Study Tutor 🤖</h1>
+
 
 **GarudaHacks 6.0 Hackathon - 3rd Place Winner (Education & Equity Track)**
 
