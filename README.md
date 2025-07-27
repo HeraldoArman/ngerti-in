@@ -182,9 +182,9 @@ Here’s a sneak peek into the Ngerti.In platform. Click on the categories below
 
 ## 👥 Meet the Team
 
-  * **Muhammad Rifqi Ilham** - Product Manager
-  * **Heraldo Arman** - AI Engineer, Backend
-  * **Valerian Hizkia Emmanuel** - Frontend
+  * **[Muhammad Rifqi Ilham](https://www.linkedin.com/in/rifqi-ilham/)** - Product Manager
+  * **[Heraldo Arman](https://www.linkedin.com/in/heraldo-arman/)** - AI Engineer, Backend
+  * **[Valerian Hizkia Emmanuel](https://www.linkedin.com/in/valhize/)** - Frontend
 
 -----
 
