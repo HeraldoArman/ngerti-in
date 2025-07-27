@@ -36,12 +36,12 @@ Our goal is to leverage AI to make education personal, accessible, and effective
   * **AI Talk:** An interactive AI who can answer students with real-time voices.
   * **Interactive Whiteboard:** The AI can write and explain directly on the whiteboard.
   * **Automatic Summary:** After the study session is done, the user can ask for a summary.
-  * **Export:** Users can export the whiteboard/study session to a PDF format.
+  * **Export:** Users can export the whiteboard to a PNG format.
   * **AI-Powered Tutoring:** Get instant help from AI tutors in a variety of subjects including Math, Bahasa Indonesia, Natural Science, Social Science, and English.
   * **Interactive Video Calls:** Engage in one-on-one video sessions with AI tutors for a more personalized learning experience.
-  * **Meeting Management:** Easily schedule, manage, and review your tutoring sessions through the dashboard.
   * **Session Recordings and Transcripts:** Access recordings and transcripts of your past sessions to review and reinforce your learning.
   * **Automated Summaries:** Receive AI-generated summaries of your tutoring sessions to quickly recap the key concepts covered.
+  * **Ask AI:** After the call end, you still can chat with the AI based on the meet you just do.
 
 ## What Makes It Difference?
 Ngerti.in stands out with its unique, interactive features:
