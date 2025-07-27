@@ -1,20 +1,20 @@
 <picture>
-<img width="1920" alt="Ngerti ln (2)" src="https://github.com/user-attachments/assets/10956cdd-4f57-4c45-bf65-913430fccb46" />
+<img width="1920" alt="Ngerti.ln" src="https://github.com/user-attachments/assets/10956cdd-4f57-4c45-bf65-913430fccb46" />
 </picture>
-<h1 align="center">Ngerti.in - Your Personal AI Study Tutor 🤖</h1>
+<h1 align="center">Ngerti.In - Your Personal AI Study Tutor 🤖</h1>
 
 
 **GarudaHacks 6.0 Hackathon - 3rd Place Winner (Education & Equity Track)**
 
-Ngerti.in is an innovative AI-powered learning platform designed to provide personalized and interactive learning experiences. This platform connects students with AI tutors for various subjects, facilitating engaging and effective learning sessions through real-time voice integration and interactive whiteboard explanations.
+Ngerti.In is an innovative AI-powered learning platform designed to provide personalized and interactive learning experiences. This platform connects students with AI tutors for various subjects, facilitating engaging and effective learning sessions through real-time voice integration and interactive whiteboard explanations.
 
-🏆 Ngerti.in was awarded 3rd Place in the Education & Equity Track at GarudaHacks 6.0, a high-intensity 30-hour hackathon that brings together developers and innovators from around the world to build impactful tech solutions.
+🏆 Ngerti.In was awarded 3rd Place in the Education & Equity Track at GarudaHacks 6.0, a high-intensity 30-hour hackathon that brings together developers and innovators from around the world to build impactful tech solutions.
 
 ## 🚀 Background & Inspiration
 
 Have you ever struggled to understand a lecture in class? Or hesitated to ask questions for fear of being judged? You’re not alone. Many students worldwide face similar challenges. According to UNESCO, over 600 million people lack minimum proficiency in reading and mathematics, highlighting that the issue isn't just about access but also the methods of studying.
 
-We believe learning should be an active, engaging dialogue, not a passive, one-way experience. What if you had a non-judgmental tutor available 24/7 to help you understand complex topics?  With the advancements in AI, we saw an opportunity to create a tool that allows students to learn anytime and anywhere, in real-time. Ngerti.in was built to be that listening, responsive, and guiding learning companion.
+We believe learning should be an active, engaging dialogue, not a passive, one way experience. What if you had a non judgmental tutor available 24/7 to help you understand complex topics?  With the advancements in AI, we saw an opportunity to create a tool that allows students to learn anytime and anywhere, in realtime. Ngerti.In was built to be that listening, responsive, and guiding learning companion.
 
 ### Pain Points Addressed:
 
@@ -26,9 +26,9 @@ We believe learning should be an active, engaging dialogue, not a passive, one-w
 
 ## ✨ Our Solution
 
-Ngerti.in is an AI-powered learning platform that helps students understand what they are learning through interactive voice integration and real-time whiteboard explanations. For students who are afraid to ask questions, struggle with class material, or cannot afford private tutoring, Ngerti.in offers an active and personal learning experience—as if you had your own private tutor available anytime. This isn't just passive video learning; it's about real dialogue and genuine understanding.
+Ngerti.In is an AI-powered learning platform that helps students understand what they are learning through interactive voice integration and realtime whiteboard explanations. For students who are afraid to ask questions, struggle with class material, or cannot afford private tutoring, Ngerti.In offers an active and personal learning experience, as if you had your own private tutor available anytime. This isn't just passive video learning, it's about real dialogue and genuine understanding.
 
-Our goal is to leverage AI to make education personal, accessible, and effective for every student. We believe understanding is a right, not a privilege, and with Ngerti.in, we create an opportunity for every student to succeed, regardless of their background. 
+Our goal is to leverage AI to make education personal, accessible, and effective for every student. We believe understanding is a right, not a privilege, and with Ngerti.In, we create an opportunity for every student to succeed, regardless of their background. 
 
 
 ## Features
@@ -44,7 +44,7 @@ Our goal is to leverage AI to make education personal, accessible, and effective
   * **Ask AI:** After the call end, you still can chat with the AI based on the meet you just do.
 
 ## What Makes It Difference?
-Ngerti.in stands out with its unique, interactive features:
+Ngerti.In stands out with its unique, interactive features:
 
 | Feature | Ngerti.In | ChatGPT | Khan Academy | YouTube |
 | :--- | :---: | :---: | :---: | :---: |
@@ -56,7 +56,7 @@ Ngerti.in stands out with its unique, interactive features:
 
 ## 💻 Tech Stack
 
-Ngerti.in is built with a modern and robust technology stack to deliver a seamless and real-time learning experience.
+Ngerti.In is built with a modern and robust technology stack to deliver a seamless and real-time learning experience.
 
   * **Frontend:** [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/)
   * **Backend:** [Next.js API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [tRPC](https://trpc.io/)
@@ -79,25 +79,25 @@ Check out the pitch deck we presented at GarudaHacks 6.0 to learn more about our
 [**View Pitch Deck Here**](https://drive.google.com/file/d/1LZ0iFlpiVga2wncryG2UlqN82ca6DUkB/view?usp=sharing)
 
 ## 🎥 Video Demo
-See Ngerti.in in action! This demo showcases how a student can interact with an AI tutor to solve a math problem in real-time.
+See Ngerti.In in action! This demo showcases how a student can interact with an AI tutor to solve a math problem in real-time.
 
 <p align="center">
 <a href="https://www.youtube.com/watch?v=DiydbfVfX2s">
-<img src="https://img.youtube.com/vi/DiydbfVfX2s/hqdefault.jpg" alt="Ngerti.in Product Demo" width="75%">
+<img src="https://img.youtube.com/vi/DiydbfVfX2s/hqdefault.jpg" alt="Ngerti.In Product Demo" width="75%">
 <br/>
 <em>Product Demo 1</em>
 </a>
 </p>
 <p align="center">
 <a href="https://www.youtube.com/watch?v=4FQ4IhksxB4">
-<img src="https://img.youtube.com/vi/4FQ4IhksxB4/hqdefault.jpg" alt="Ngerti.in Product Demo" width="75%">
+<img src="https://img.youtube.com/vi/4FQ4IhksxB4/hqdefault.jpg" alt="Ngerti.In Product Demo" width="75%">
 <br/>
 <em>Product Demo 2</em>
 </a>
 </p>
 
 ## 📸 Screenshots
-Here’s a sneak peek into the Ngerti.in platform. Click on the categories below to see the screenshots.
+Here’s a sneak peek into the Ngerti.In platform. Click on the categories below to see the screenshots.
 
 <details>
 <summary><strong>Dashboard &amp; Setup</strong></summary>
