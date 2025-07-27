@@ -8,11 +8,13 @@
 
 Ngerti.in is an innovative AI-powered learning platform designed to provide personalized and interactive learning experiences. This platform connects students with AI tutors for various subjects, facilitating engaging and effective learning sessions through real-time voice integration and interactive whiteboard explanations.
 
+🏆 Ngerti.in was awarded 3rd Place in the Education & Equity Track at GarudaHacks 6.0, a high-intensity 30-hour hackathon that brings together developers and innovators from around the world to build impactful tech solutions.
+
 ## 🚀 Background & Inspiration
 
 Have you ever struggled to understand a lecture in class? Or hesitated to ask questions for fear of being judged? You’re not alone. Many students worldwide face similar challenges. According to UNESCO, over 600 million people lack minimum proficiency in reading and mathematics, highlighting that the issue isn't just about access but also the methods of studying.
 
-We believe learning should be an active, engaging dialogue, not a passive, one-way experience. [cite: 5] [cite\_start]What if you had a non-judgmental tutor available 24/7 to help you understand complex topics?  With the advancements in AI, we saw an opportunity to create a tool that allows students to learn anytime and anywhere, in real-time. [cite\_start]Ngerti.in was built to be that listening, responsive, and guiding learning companion.
+We believe learning should be an active, engaging dialogue, not a passive, one-way experience. What if you had a non-judgmental tutor available 24/7 to help you understand complex topics?  With the advancements in AI, we saw an opportunity to create a tool that allows students to learn anytime and anywhere, in real-time. Ngerti.in was built to be that listening, responsive, and guiding learning companion.
 
 ### Pain Points Addressed:
 
@@ -56,13 +58,19 @@ Ngerti.in stands out with its unique, interactive features:
 
 Ngerti.in is built with a modern and robust technology stack to deliver a seamless and real-time learning experience.
 
-  * **Frontend:** Next.js, React, TypeScript, Tailwind CSS
-  * **Backend:** Next.js API Routes, tRPC
-  * **Database:** Drizzle ORM with a PostgreSQL database
-  * **Authentication:** better-auth
-  * **Video Streaming:** Video Stream SDK
-  * **Hhiteboard:** Excalidraw
-  * **AI:** Inngest, OpenAI
+  * **Frontend:** [Next.js](https://nextjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/)
+  * **Backend:** [Next.js API Routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes), [tRPC](https://trpc.io/)
+  * **Database:** [Drizzle ORM](https://orm.drizzle.team/) with a [PostgreSQL database](https://www.postgresql.org/)
+  * **Authentication:** [better-auth](https://www.better-auth.com/)
+  * **Video Streaming:** [Video Stream SDK](https://getstream.io/video/)
+  * **Whiteboard:** [Excalidraw](https://excalidraw.com/)
+  * **AI:** [Inngest](https://www.inngest.com/), [OpenAI](https://openai.com/)
+
+
+## DevPost
+Check out the DevPost we presented at GarudaHacks 6.0 to learn more about our vision, process, and the problem we're solving.
+
+[**View on DevPost**](https://devpost.com/software/ngerti-in)
 
 ## Pitch Deck
 
